@@ -1,0 +1,416 @@
+2018/3/8
+正课
+1.什么是jQuery
+ 第三方的执行DOM操作的极简化的函数库
+  第三方：所有第三方的内容需要下载
+  执行DOM操作：学习jQuery还是在学DOM
+   1.增删改查
+   2.事件绑定
+   3.动画
+   4.ajax
+  极简化：jQuery时DOM操作的终极简化版本
+  函数库：jQuery中一切都是函数
+ 为什么：2个原因
+  1.简化
+  2.解决了绝大多数兼容性问题：凡是jQuery让用的，都没有兼容性问题
+ 笔试：如何快速学习一项新技术/框架
+  3步
+  1.上官网，看是什么
+  2.上官网，看快速入门
+  3.上官网，下载手册
+2.如何使用jQuery
+ 1.下载：
+  版本：
+    1.x：兼容旧浏览器
+      未压缩版：保持完备的注释，代码格式，见名知意的变量名的版本
+       特点：可读性好，便于学习和研究，但是体积大，不便于下载
+       何时：学习和开发环境中
+      压缩版：去注释，去掉代码格式，变量名极简化
+       特点：体积小，下载快，但是毫无可读性
+       何时：生产环境
+    2.x：不再兼容旧浏览器
+    3.x：不再兼容旧浏览器。加入了很多新特性
+     笔试：jQuery 3.x新特性
+      1.jQuery自身版本，都运行在严格模式下
+      2.支持for..of循环，代替$.each()
+      3.新动画API：requestAnimationFrame()
+      4.支持promise
+ 2.引用方式：2种
+  1.将jQuery.js文件下载到项目本地文件夹保存
+  2.使用CDN网络：根据用户到网络中任意一台服务器的网络状况，自动选择最优的服务器下载资源
+   原理：引入jQuery，其实是向window中引入一个新的类型
+    1.构造函数：创建jQuery类型的子对象
+     何时：只要使用jQuery，都要先创建jQuery类型的子对象
+     为什么：因为普通的DOM元素对象，不能使用jQuery的简化版API
+     如何创建：2种
+	1.var jq=new jQuery("selector")
+                 jQuery("selector")
+		 $("selector")
+	2.将现有元素包装进jQuery对象中
+	 var $elem=$(DOM 现有元素)
+         什么是jQuery对象:封装查找到的DOM元素，并提供操作DOM元素的API的类数组对象
+    2.原型对象：保存所有jQuery类型子对象都能使用的API
+    jQuery API的三大特性：
+     1.一个API两用：如果提供了新值，就修改，没提供新值，就获取
+     2.自带遍历：对jQuery对象调用一次API，会自动应用到jQuery对象内每个DOM元素上
+     3.多数API都返回正在操作的jQuery对象
+       所以，如果对同一个jQuery对象执行多个操作，可用链式操作
+ 3.查找：2种
+  1.按选择器查找
+   jQuery支持所有CSS的选择器，并且扩展了少量的新选择器
+    基本选择器：5个
+     1.id 2.elem 3..class 4.* 5.选择器1,选择器2..
+    层级选择器：4个
+     1.后代(空格) 2.子代(>) 3.紧邻兄弟(+) 4.所有兄弟(~)
+    过滤选择器
+     子元素过滤：相对各自父元素内编号，从1开始
+      :first-child :last-child :nth-child(n) :only-child
+     基本过滤：jQuery中新增 先选出符合条件的元素放入一个集合，再从0编号
+      :first/last :eq/lt/gt(i) :even/odd
+     属性过滤：同css
+      [属性名]       根据属性名选择
+      [属性名=值]    根据属性名=值选择
+      [属性名^=值]   根据以值开始的属性名选择
+      [属性名$=值]   根据以值结束的属性名选择
+      [属性名*=值]   根据包含此值的属性名选择
+      [属性名!=值]   根据没有此值的属性名选择
+     可见性过滤
+      :hidden   专门选择/判断隐藏的元素
+       只能选择2种：type="hidden" 和 display:none
+      :visible  专门选择/判断显示的元素
+     内容过滤：4个：jQuery中特有
+      第一对：按有没有子内容，选择/判断元素
+       :parent      :empty
+      第二对：
+        1.按内容文本选择/判断元素
+	 :contains(文本)
+	2.按子元素特征选择/判断元素
+	 :has(selector)
+     状态过滤：同css
+      :enabled :disabled :checked :selected
+     表单元素过滤：jQuery中特有
+      专门用于在表单中，选择表单元素
+      :[type]  每种type都对应着一个专门的选择器
+       比如：:password  :submit
+      :input   选择所有表单元素
+       input textarea select button
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+2018/3/9
+1.修改
+ 内容：
+  HTML代码片段：.html()   代替 .innerHTML
+  纯文本内容：  .text()   代替 .textContent
+  表单元素的值：.val()    代替 .value
+ 属性：
+  HTML标准属性：  .attr("属性名"[,"值"])   代替 .属性名
+   同时修改多个属性
+    .attr({
+     属性名:值,
+     属性名:值,
+     属性名:值,
+     ...
+    })
+    只能读取attribute集合里的属性
+  状态属性：      .prop("属性名"[,bool])   代替 .属性名
+    可以读取所有属性，包括存储在内存中的隐藏属性
+  自定义扩展属性：2种
+   可读取任意自定义扩展属性
+    .attr("自定义属性名"[,"值"])
+   只能读取data-*开头的自定义扩展属性
+    .data("自定义属性名"[,"值"])      代替 .dataset.属性名
+ 样式：
+  获取/修改css属性
+   .css("css属性名","值")
+    如果修改css属性时，.css相当于.style.css属性名
+    如果获取css属性值时，.css自动调用getComputedStyle
+  设置class属性，批量应用样式
+   .addClass()
+   .removeClass()
+   .hasClass()
+   .toggleClass()等效于if(hasClass()){removeClass();}else{addClass();}
+2.查找——第2种：按节点间关系查找
+ 2大类关系
+  1.父子
+   .parent()                    代替 .parentNode
+   .children(["selector"])      代替 .children 只在子代查找
+     .find("selector")   在所有后代里查找
+   .children(":first")          代替 .firstElementchild
+     .children():first()
+   .children(":last")           代替 .lastElementchild
+  2.兄弟
+   .prev()     代替.previousElementSibling
+    .prevAll(["selector"]) 之前所有兄弟
+   .next()     代替.nextElementSibling
+    .nextAll(["selector"]) 之后所有兄弟
+   .siblings(["selector"]) 选择除我之外的前后所有兄弟
+3. 添加，删除，替换，克隆
+ 添加: 
+   1. 用$创建新元素: var $elem=$("html代码片段")
+   2. 将$elem添加到DOM树
+     4种: 
+      1. 末尾追加: $parent.append($elem)  .appendChild
+        $elem.appendTo("parent selector") //return $elem
+      2. 开头插入: $parent.prepend($elem) 
+        $elem.prependTo("parent selector") //return $elem
+      3. 插入到指定子元素前: $child.before($elem)
+      4. 插入到指定子元素后: $child.after($elem)
+   其实都可简化为一步: 
+     $parent.append("html片段")
+     $("html片段").appendTo($parent)
+ 删除: $(...).remove();
+ 替换: 2个:
+   $(现有元素).replaceWith(新元素)
+   $(新元素).replaceAll(现有元素)
+ 克隆: 
+   $(...).clone() 浅克隆: 仅复制属性和样式，不复制行为
+   $(...).clone(true) 深克隆: 即复制属性和样式，又复制行为
+
+4. 事件绑定: 
+ DOM: .addEventListener("事件名",handler)
+      .removeEventListener("事件名",handler)
+ 鄙视: jQuery中共有几种事件绑定方式，分别有什么特点
+  1. .bind/unbind("事件名",handler)
+	单纯简化addEventListener/removeEventListener
+    unbind() 三个重载: 
+     unbind("事件名",handler) 移除一个事件上绑定的一个指定处理函数
+     unbind("事件名") 移除一个事件上绑定的所有处理函数
+     unbind() 移除所有事件上绑定的所有处理函数
+  2. .one() 特殊的bind，绑定事件后，只触发一次，执行后，自动解绑。
+  3. .delegate() 事件委托, 其实就是简化版利用冒泡
+   何时: 只要利用冒泡，就用delegate
+   如何: $parent.delegate("selector","事件名",handler)
+    其中: 2个简化:
+     1. "selector" 用于筛选符合条件的子元素才能触发事件。——自己不用再写if判断
+     2. 又让this重新指向e.target
+   鄙视: bind vs delegate
+    1. 绑定位置: 
+      .bind() 直接绑在目标子元素上
+      .delegate() 只在父元素上绑定一次
+    2. 事件监听的个数:
+      .bind() 导致更多的监听
+      .delegate() 只有一个监听
+    3. 对动态添加的新元素:
+      .bind() 必须重复绑定，才能让新元素获得事件
+      .delegate() 无需反复绑定，新元素也可自动获得父元素上的事件
+    .undelegate() 解绑父元素上共享的处理函数
+  4. .live/die 废弃: 
+  5. .on/off 统一了bind和delegate
+    重载: 
+    .on("事件名",handler)   代替bind
+    .on("事件名","selector",handler)  代替delegate
+  6. .事件名(handler)   其实只是.bind的简化
+   问题: 1. 不能代替delegate简化利用冒泡
+        2. 不是所有事件都有简化。
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+2018/3/12
+1.事件
+ 页面加载后执行：2种
+  1.仅DOM内容(html,js)加载后就提前执行
+    DOMContentLoaded
+    何时：如果一些初始化操作，不必等待css和图片，就可执行时，应放在DOMContentLoaded中提前执行
+     比如：事件绑定！
+    如何：$(document).ready(function(){...})
+     简化：$().ready(function(){...})
+      更简化：$(function(){...})
+  2.在所有页面内容(html,css,js,图片)加载后执行：
+    window.onload=function(){}
+    何时：如果一个操作，必须等待css和图片加载后才能执行时，应放在onload中
+    如何：$(window).load(function(){...})
+ 鼠标事件
+  mouseover mouseout
+  问题：反复进出子元素，会反复触发父元素上的事件
+  解决：mouseenter mouseleave 
+   即使反复进出子元素也不会反复触发父元素上的事件
+  简写：$().hover(
+	funciton(){},   //mouseover
+	funciton(){},   //mouseout
+  )
+  如果两个处理函数可统一为一个，则只需要写一个
+ 模拟触发：手动调用一个元素的事件处理函数
+  如何：$(...).trigger("事件名")
+   简化：事件绑定函数也可两用
+    $(...).事件名([function(){...}])
+2.动画
+ 1.简单动画：3组固定效果
+  1.显示隐藏：.show()     .hide()   .toggle()
+    强调：不带参数，用display瞬间显示隐藏，可专门代替.style.display=xxx
+    如果希望动画效果，加入时间参数
+    问题：1.用JS程序的定时器实现的额，效率不如css
+	  2.动效是固定的，几乎不可维护
+    解决：class+transition
+  2.上滑下滑：.slideUp()  .slideUp()  .slideToggle()
+  3.淡入淡出：.fadeIn()   .fadeOut()  .fadeToggle()
+ 2.万能动画
+  什么是：可对任意数值类型的css属性添加动画效果
+  何时：只要用程序控制修改css属性值，实现动画效果
+  如何：
+   $(...).animate({
+	css属性值:目标值,
+	      ...:...,
+   },持续时间)
+   强调：只能支持单个数值的css属性
+  停止动画：$(...).stop()
+      问题：$(...).stop()只能停止当前正在播放的一个动画，队列中后续动画依然继续播放
+      解决：$(...).stop(true)停止动画，并清除对列
+  判断/选取正在播放动画的元素： :animated
+  动画播放后执行
+   所有动画API的最后一个参数都是回调函数，在动画执行后自动执行
+  排队和并发
+   1.并发：多个css属性同时变化
+     如何：只要放在一个animate内的css属性，都是并发变化
+   2.排队：多个css属性依次变化
+     如何：对一个元素，反复调用多次动画API，多次动画API以排队方式执行
+      其实：调用动画API，仅是将动画加入执行队列的意思，不是立即执行
+     延迟：$(...).delay().animate()
+3.类数组对象操作
+ jQuery对类数组对象提供了简化版API
+  静态方法：通过$直接调用，即支持数组，又支持类数组对象
+  $.each(类数组对象/数组对象,function(i,elem){
+	//对每个元素值执行相同的操作
+  })
+  $.inArray(要查找的元素,类数组对象/数组对象)
+  jQuery类型的实例
+   $(...).each()
+   $(...).index()
+    简化：如果在同一个父元素内检查位置
+      $(子元素).index()
+  笔试：$.each()和$(...).each()的区别
+   1.存储位置
+    $.each() 是静态方法，直接定义在jQuery构造函数上
+    $(...).each() 是实例方法，保存在jQuery的原型对象中
+   2.支持的对象类型
+    $.each() 可遍历任意数组和类数组对象
+    $(...).each() 只能被jQuery类型的子对象调用
+4.添加自定义API
+ 如果jQuery提供的简化版API不够用，也可自己添加需要的自定义API
+  如何：jQuery.fn.自定义方法=function(){
+	//this->将来调用sum的jQuery类型的子对象
+  }
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+2018/3/13
+插件/组件：拥有独立的界面和行为的小功能
+ 为什么：很多项目之间，大部分功能，都是很类似的
+ 何时：只要在项目中发现反复使用的小功能，都要将小功能封装为插件/组件
+ 包括：3种来源
+  1.jQuery官方：jQuery UI
+  2.第三方插件
+  3.自定义封装插件
+1.jQuery官方：jQuery UI 
+ 下载并引入
+   文件夹结构
+    css/
+     jquery-ui.css
+     images/
+    js/
+     jquery.js
+     jquery-ui.js
+   引入
+    link rel="stylesheet" href="css/jquery-ui.css"
+    script src="jquery.js"
+    script src="jquery-ui.js"
+  如何使用：
+   1.效果
+    jQuery UI 重写了jQuery中一些API，添加了额外的效果
+     1.重写了.animete 方法，使其支持颜色动画
+     2.为addClass添加了动画效果
+     3.为简单动画，添加了更多特效
+   2.交互
+   3.小部件/组件
+    如何：
+     1.引入插件的css文件
+     2.按照插件的约定，定义HTML内容
+     3.引入jquery和jquery UI的js
+     4.在自定义脚本中，找到要应用插件的父元素，调用插件API
+    侵入性：插件根据自己的需要，自动的向元素中添加辅助的样式属性和行为
+2.自定义插件
+ 前提：已经用普通的HTML，css，JS实现了
+ 如何：2种
+  1.jQuery UI的侵入方式
+    1.将css提取到单独的css文件中保存
+     强调：css中的选择器避免使用id，元素。优先使用class和自定义扩展属性
+    2.定义插件.js文件
+     判断是否提前加载了jquery.js
+     向jQuery,fn中添加插件 API
+      向当前元素下的子元素侵入class和自定义扩展属性
+      为当前元素下的子元素绑定事件
+    3.在页面中
+     按插件的要求，定义html内容格式
+     引入插件css
+     引入jquery.js,插件.js
+     自定义脚本中，找到插件父元素，调用插件
+  2.bootstrap DIY方式
+   1.将css提取到单独的css文件中保存
+     强调：css中的选择器避免使用id，元素。优先使用class和自定义扩展属性
+   2.定义插件.js文件
+     判断是否提前加载了jquery.js
+     在整个页面中查找符合条件的元素，自动绑定事件
+   3.在页面中
+     引入插件css
+     按插件的要求，定义html内容格式
+      手动添加class和自定义扩展属性
+     引入jquery.js,插件.js
+      在引入插件JS时，插件JS会自动查找当前网页中符合条件的元素，添加行为
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+2018/3/14
+1.第三方插件
+ 1.验证
+ 2.文件上传
+ 3.wysiwyg
+ 4.masonry
+2.jQuery Ajax API
+ $.ajax({
+    url:
+    type:
+    data:
+    dataType:
+    //老版本不兼容.then时
+      beforeSend:function(xhr 请求对象){//发送之前调用}
+      success:function(data){//当成功返回结果时}
+      error:function(err){//请求出错时}
+      complete:function(){//请求完成时}
+ }).then(data=>{
+   //data是服务器端返回的数据（json对象或字符串）
+ })
+ $.get("url",data,success,dataType)
+  $.getJSON("url",data,success)
+  $.getScript()
+  $(父元素).load("url")   //获得html片段
+ $.post("url",data,success,dataType)
+3.跨域
+ 什么是：请求发起的域名地址和要请求的目标地址不在同一域名下
+ 何时：1.自己的应用程序，要请求别人网站上的数据
+         比如：股票，天气...
+       2.自己的项目太大，前端和后端的应用程序，也分属不同域名之下
+       3.自己公司的多个系统之间，互相请求数据
+ 包括：
+   1.端口号不同
+   2.协议不同
+   3.二级域名不同
+   4.域名不同
+   5.即使同一主机的IP和域名之间互访
+ 问题：xhr ajax请求不允许跨域
+ 解决：
+  除了xhr外，有很多元素/属性可以跨域
+   比如：img.src  link.href  script.src
+  1.jsonp(jaon with padding) 方式跨域:（通过script.src）
+   方式一：
+     客户端：不要使用xhr，用script标签请求PHP
+     服务端：不止返回数据，而是将数据填充在一段js代码中返回
+     问题：服务器端返回的语句是固定的，客户端无法灵活改变
+     解决：
+   方式二：
+     客户端：先定义一个接受参数的函数，再用script标签请求PHP
+     服务端：只返回一条函数调用语句，函数名客户端函数名保持一致
+     问题：函数名必须和服务端统一
+     解决
+   方式三：
+     客户端：先定义一个接受参数的函数，再用script标签请求PHP，携带一个参数callback，值为函数名
+     服务端：从请求中获得callback参数值（函数名），只返回一条函数调用语句，将函数名和数据拼接成一句调用的js语句
+     问题：只能在页面加载时就执行，无法自行选择出发的时机
+     解决
+   方式四：
+     客户端动态创建script添加到HTML,用完删掉script
+  2.服务端跨域
+    修改响应头，添加允许跨域的地址:
+     header("Access-Control-Allow-Origin:请求来自的地址");

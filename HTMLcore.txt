@@ -1,0 +1,400 @@
+2018/3/19
+1.介绍近期课程
+  HTML5      新特性——（10）——canvas绘制/视频
+  Bootstrap  css/js 框架（响应式布局）
+  Node.js    运行于服务器开发平台（类似PHP）
+  （仔细复习js/dom/5小时学习<4小时写程序>）
+  （项目 2小时）
+2.HTML5 新特性
+  1.表单新特性
+  2.视频和音频
+  3.Canvas 绘图
+  4.SVG 绘图
+  5.拖放 API
+  6.地理定位
+  7.WebSocket
+  8.WebStroage
+  9.WebWorker
+  10.H5 新标签
+3.HTML5 新特性——表单新特性
+  1.新的input type
+    h4:text/password/submit...
+    h5:email;url;number;tel;color;date;month;week
+  2.新的表单元素
+    h4:textarea;button;select/option;
+    h5:datalist;progress;meter;output
+     1.datalist 为input提供输入建议列表，用户可以选取，也可手动输入，本身不可见，通过input的list属性读取
+       <datalist id="">            
+        <option>xxx</option>
+        <option>xxx</option>
+       </datalist>
+     2.progress 进度条
+       <progress></progress>                 左右晃动的进度条
+       <progress value="0.8"></progress>     具有指定进度值的进度条
+     3.meter  刻度尺，用于标识一个值所处范围，不可接受（红色），可接受（黄色），非常优秀（绿色）
+        <meter value="当前值" min="最小值" max="最大值" low="下限" high="上限" optimum="最佳值">
+     4.output 输出，语义标签，没有任何外观样式，样式上等同于span
+  3.表单的新属性
+   h4:name;id;value;src;readonly;disabled;checked
+   h5:1.placeholder：占位符
+      2.autofocus  ：自动获取焦点
+      3.multiple   ：允许输入框输出多个值
+      4.form       ：用于把输入域放置在form外部
+      5.required   ：当前输入域必须输入
+      6.maxlength  ：字符串最大长度
+        minlength  ：字符串最小长度
+      7.max;min    ：数值最小值和最大值
+      8.pattern    ：正则表达式判断
+4.项目——学子商城后台管理
+5.软件项目的开发流程(需求分析)
+ 1.需求分析-（技术经理--了解用户需要一个什么网站）
+ 2.美工-（设计图片）--切图
+ 3.前端-（html;css;js）--静态网页->vue/rect
+ 4.后端-（mysql/php/java）--静态网页
+ 5.测试
+ 6.运维（Linux/apache/...）ip 域名 上线
+ 7.正式上线
+6.创建项目目录结构
+ admin
+    data 所有PHP程序保存在此
+    db   保存数据库创建脚本文件
+    css  所有css文件
+    js   所有js文件
+    img  所有项目中图片
+    fonts字体文件
+    login.html        用户登录
+    main.html         主页面
+    product_list.html 产品列表
+7.分析实现后台管理员登录功能
+  功能描述：
+	用户输入用户名和密码点击登录按钮，如果输入正确显示后台管理页面 main.html
+        用户输入格式不正确提示
+	用户输入不存在用户提示
+	功能实现
+	login.html          显示表单
+	data/01_login.php   获取用户输入的数据并且查询数据库，返回结果 json
+			    {"code":-1,"msg":"用户名或密码有误"}
+			    {"code":1,"msg":"登录成功"}
+         实际项目中有些项目特性要求
+	  1.所有表添加四列
+	   cuid ctime   {创建记录用户编号，创建时间}
+	   muid mtime   {修改记录用户编号，创建时间}
+	  2.所有记录不允许delete操作
+	   isdel        {0正常数据 1已经被删除}
+	  3.为了适应项目扩展性，习惯添加几列[备用列]
+	   vi1 vi2   INT
+	   vs1 vs2   VARCHAR(255)
+	  4.如果项目中有查询非常频繁的数据，而且要求查询速度快，将数据复制一份到redis,程序查询redis,redis 查询速度快[2w/秒]
+        login.js            获取用户的输入发送ajax请求给PHP，完成验证操作
+	要点：1.小心正确json格式
+	      2.网络故障
+	添加新功能验证码
+	 验证码作用：拦截网络攻击手段（机器人攻击）
+	 实现过程：
+	  1.创建生成验证码图片程序 00_code_gg.php
+	  2.login.html<img src="data/00_code_gg.php">
+	    <input type="text" name="yzm">
+	  3.login.js 获取用户输入验证AJAX发送 login.php
+	  4.login.php 获取系统验证码值，获取用户输入验证码值，比较是否相同
+	   获取php验证码值
+	   session_start();
+	   $_SESSION["code"]
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+2018/3/20
+常见错误集锦
+ 1.header(Content-Type:application/json;charset=UTF-8) 乱码/下载/发送json错误
+ 2.错误：echo "{'code':1}"
+   正确：echo '{"code":1}'
+   左侧必须是双引号，外部是单引号
+ 3.错误：http://localhost:63342/HTML5core/admin/login.html
+   正确：http:127.0.0.1/HTML5core/admin/login.html
+ 4.显示html是清空缓存 F12>Networrk>Disable cache 打钩
+ 5.sql syntax sql 语句语法错误
+Flash 被H5取代体现在哪些方面
+  Flash 绘制========> Canvas/SVG
+  Flash 动画========> 定时器/Canvas
+  Flash 视频和音频==> video/audio
+  Flash 客户端存储==> WebStorage
+1.h5 新特性--视频与音频
+  1.h5提供新的标签 video 用于播放视频
+      <video src="x.mp4"></video>
+       为了兼容性，一般会写不同的格式选择
+	<video>
+          <source src="x.mp4"/>
+          <source src="x.ogg"/>
+          <source src="x.webm"/>
+        </video>
+     它本身是一个 300*150 的inline-block
+     video 标签/对象常用的成员
+	   成员属性
+	    autoplay:bool 是否自动播放
+	    controls:bool 是否显示播放控件
+	    loop:bool     是否循环播放
+	    muted:bool    是否静音播放
+	    poster:""     在播放第一帧画面之前显示海报（图片）
+	    preload:""    视频的预加载策略
+	     auto:         预加载视频元数据以及缓冲一定时长
+	     metadata:     只预加载视频元数据（尺寸/时长/第一画面内容）
+	     none:         不预加载任何数据
+	    —————JS对象属性—————
+	    currentTime:    当前播放时长
+	    duration:       总时长
+	    paused:         当前视频是否处理暂停状态
+	    volume:         当前音量
+	    playbackRate:   播放速度
+	   成员方法
+	    play();    播放视频
+	    pause()    暂停播放
+	   成员事件
+	    onplay     当视频开始播放时触发事件
+	    onpause    当视频暂停播放时触发事件
+  2.h5提供新的标签 audio 用于播放视频
+    <audio src="x.mp3"></audio>
+       为了兼容性，一般会写不同的格式选择
+	<audio>
+          <source src="x.mp3"/>
+          <source src="x.wav"/>
+        </audio>
+    它本身是一个 300*30 的inline-block,但是没有controls,display为none
+           成员属性
+	    autoplay:bool 是否自动播放
+	    controls:bool 是否显示播放控件
+	    loop:bool     是否循环播放
+	    muted:bool    是否静音播放
+	    preload:""    视频的预加载策略
+	     auto:         预加载视频元数据以及缓冲一定时长
+	     metadata:     只预加载视频元数据（尺寸/时长/第一画面内容）
+	     none:         不预加载任何数据
+	    —————JS对象属性—————
+	    currentTime:    当前播放时长
+	    duration:       总时长
+	    paused:         当前视频是否处理暂停状态
+	    volume:         当前音量
+	    playbackRate:   播放速度
+	   成员方法
+	    play();    播放视频
+	    pause()    暂停播放
+	   成员事件
+	    onplay     当音频开始播放时触发事件
+	    onpause    当音频暂停播放时触发事件
+2.h5 新特性--canvas
+  网页中的实时势图，动态特效，网页游戏，地图应用都要使用到绘图技术，有三种绘图技术
+  1.SVG    绘图 2d 矢量图绘图技术，2000年出现，后纳入h5标准
+  2.Canvas 绘图 2d 位图绘图技术
+    难点:1.坐标系
+         2.单词比较多
+  3.Webgl  绘图 3d 位图绘图技术
+ canvas：画布
+  <canvas></canvas>
+  canvas 标签在浏览器中默认300*150的inline-block,画布宽度和高度只能用html/js属性来赋值，不能用css样式赋值
+  #每个画布上有且只有一个“画笔”对象，使用该对象进行绘图
+   var ctx=canvas.getContext("2d");  //得到画笔对象
+  1.Canvas 绘图 绘制矩形（矩形的定位点在自己的左上角）
+    ctx.lineWidth=1;   描边宽度
+    ctx.fillStyle="#fff"; 填充样式、颜色
+    ctx.strokeStyle="#fff"; 描边样式、颜色
+    ctx.fillRect=(x,y,w,h); 填充矩形
+    ctx.strokeRect=(x,y,w,h); 描边一个矩形
+    ctx.clearRect=(x,y,w,h); 清除一个矩形范围内所有绘图
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+2018/3/21
+ Canvas 绘图 绘制文本
+  ctx.font="12px sans-serif";   文本大小和字体
+  ctx.fillText(str,x,y);        填充一段文本
+  ctx.strokeText(str,x,y);      描边一段文本
+  ctx.measureText(str);         获取文本尺寸，返回值
+ Canvas 绘图 绘制渐变对象
+  线性渐变：linearGradient
+  径向渐变：radiaGradient
+   var g=ctx.createLinearGradient(x1,x2,y1,y2);   创建渐变对象
+   g.addColorStop(0,color);           添加颜色
+ Canvas 绘图 路径
+  Path：由多个坐标点组成的任意形状，路径不可见，可用于“描边”，“填充”，“裁剪”
+  ctx.beginPath();   开始一条新路径
+  ctx.closePath();   闭合当前路径
+  ctx.moveTo(x,y);   移动到指定点
+  ctx.lineTo(x,y);   从当前点到指定点画直线
+  ctx.arc(cx,cy,r,start,end); 绘制圆拱路径
+   cx,cy 圆心， r 半径，start 开始角度，end 结束角度
+  ctx.stroke();      描边
+  ctx.fill();        填充
+  ctx.clip();        裁剪
+ Canvas 绘图 图像
+  canvas属于客户端技术，图片在服务器上，所用浏览器，必须下载要绘制的图片，并且等待图片下载成功，才能绘制图片
+   var p1=new image();    创建图片对象
+   p1.src="img/x.png";    下载图片
+   p1.onload=function(){  当图片下载成功后触发事件
+	ctx.drawImage(p1,x,y);     //原始大小图片
+	ctx.drawImage(p1,x,y,w,h); //拉缩图片
+   }
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+2018/3/22
+ canvas 绘图 变形操作
+  ctx.rotate(弧度)      旋转
+  ctx.translate(x,y)    平移原点
+  ctx.save()            保存画笔状态
+  ctx.restore()         恢复画笔上一次保存状态
+ svg 绘图
+  位图：由一个又一个像素点组成，每个点各有自己的颜色，色彩细腻，但是放大后失真
+  矢量图：由一个又一个线条组成，每个线程可以指定颜色，方向，可以无限缩放，但细节不够丰富
+  canvas与svg比较
+   类型不一样        canvas 2d位图     svg 2d矢量图
+   如何绘图不一样    canvas 使用js代码绘图     svg 使用标签绘图
+   事件绑定不一样    canvas 每个图形不是元素，无法直接绑定事件     
+                     svg    每个图形都是元素，可以直接绑定事件
+   应用场景不一样    canvas 特效/邮箱     svg 图标/地图
+   svg标签
+    <svg></svg>          svg画布
+	    <rect></rect>        矩形
+	     属性 width height fill fill-opacity stroke-width   stroke-opacity
+	    <circle></circle>    圆形
+	     属性 r cx cy fill fill-opacity stroke-width   stroke-opacity
+	    <ellipse></ellipse>  椭圆形
+	     属性 rx:水平半径 ry:垂直半径 cx cy
+	    <line></line>        直线
+	     属性 x1 x2 y1 y2
+	    <polyline></polyline>折线 一条折线上可以有任意多个连续点
+	     属性 points：可以写多个点
+	    <text>文本内容</text>        文本
+	    <image xlink:href="x.png"></image>      图像
+	    <defs></defs>     渐变对象
+	     定义渐变对象
+	      <defs>
+	       <linearGradient id="g1">
+		<stop offset stop-color stop-opacity>
+	       </linearGradient>
+	      </defs>
+	      <ANY fill="url(#g1)"></ANY>
+    1.所有图形默认只有填充色（黑色），没有描边色
+    2.svg图形的样式可以有元素声明，也可以用css形式来声明，但用css声明时，只能命名用svg专用样式，不能用css样式，如边框只能用stroke，而不能用border
+    3.图形可以使用js
+    4.动态添加svg图形可以用两种形式
+     #HTML字符串拼接
+      var html="<rect></rect>";
+      svg.innerHTML=html;
+     #使用创建元素、
+      var rect=document.createElementNS("http://www.w3.org/20002svg","标签名")
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+2018/3/23
+地理定位
+ Geolocation:地理定位，使用js获取浏览器所在地理坐标(经度，纬度，海拔，速度)，用于实现LBS应用
+         LBS：Location Based Service 
+  手机浏览器如何获得定位信息
+   1.首先手机中GPS芯片与卫星通信，定位精度米
+   2.次选手机通信基站进行定位获取，定位精度公里
+  PC浏览器如何获取定位信息
+   1.通过IP地址进行反向解析，定位精度几十公里
+    解决方案：通过百度地图，腾讯地图定位
+   HTML5中提供一种新的对象，用于获取当前浏览器定位信息
+   window.navigator.geolocation
+   getCurrentPosition(pos){}
+ 通过百度地图定位
+  1.注册百度开发者账号
+    http://lbsyun.baidu.com
+  2.创建一个网站，登录百度地图，为网站申请AccessKey
+  3.在自己的网中嵌入百度地图提供API
+    http://lbsyun.baidu.com/index.php?title=jspopular
+    var map=new BMap.Map("container")    创建地图实例
+    var poiner=new BMap.Point(经度,纬度) 创建坐标点
+    map.centerAndZoom(point,17) 以指定点为中心并缩放
+h5 新特性 拖放API
+ Drag&Drop:拖动和释放
+  拖动源对象(会动)可以触发的事件
+   dragstart 拖动开始
+   drag      拖动中
+   dragend   拖动结束
+   整个拖动过程：dragstart*1+drag*n+dragend*1
+  拖动目标对象(不动)可以触发事件
+   dragenter 拖动进入
+   dragover  拖动悬停在上方 
+   drop      在上方释放
+   dragleave 拖动着离开
+   整个拖动过程 1.dragenter*1+dragover*n+dragleave*1
+   整个拖动过程 2.dragenter*1+dragover*n+drop
+   注意：必须阻止dragover默认行为，drop才能执行
+h5 新特性 Web Worker 理论重要 代码3行
+ 程序：program 被CPU执行代码，存储在外存（硬盘）中
+ 进程：process 将外存中的代码加载在内存中，并且分配了空间
+ 线程：Thread  线程是进程内部执行代码的基本单位
+ Chrome浏览器中线程模型
+  一个Chrome进程内，多个线程“并发”向web服务器发起http请求，以获得所需的资源（资源请求线程），还有一个县城（UI主线程），负责绘制网页中内容并且解析JS程序
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+2018/3/26
+h5 新特性 Web Worker 理论重要
+ <button>按钮1</button>
+  <script src=”x.js”>很耗时js任务</script>
+  <button>按钮2</button>
+ 解决：创建一个新线程（worker）让他执行耗时js任务
+ 语法：new Worker("x.js")
+ 浏览器不允许worker线程操作任何DOM和BOM对象
+ 原因：浏览器只允许UI线程操作DOM&BOM，若多个线程同时操作DOM&BOM页面将混乱，所以jquery代码不能使用worker
+ Worker线程可以给UI发送数据
+  Worker：postMessage(str);
+  UI:var w=new Worker("x.js");
+     w.onmessage=function(e){e.data};
+ UI发送数据给Worker线程
+  UI:var w=new Worker("x.js");
+     w.postMessage(str);
+  Worker:onmassage=function(e){e.data}
+ 项目中Worker作用场景
+ 1.只要js中由DOM&BOM就不能使用Worker
+ 2.Worker适合于执行耗时js任务，复杂计算，加密和解密
+h5 新特性 Web Storage
+ 在浏览器中存储当前用户专用数据：内容定制，样式定制
+ 在客户端存储数据的可选方式
+  1.Cookie 浏览器兼容性好，不能超过4KB，操作复杂
+  2.Flash 依赖于flash播放器
+  3.H5 WebStorage 不能超过8MB，操作简单
+  4.IndexDB 可存储大量的数据，还不是标准技术
+ session：会话（操作过程），浏览器从打开某一个网站的第一个页面开始，中间可能打开很多歌页面，直到
+ 关闭浏览器整个过程称为（一次会话）
+ WebStorage技术中，浏览器为用户提供两个对象
+ 1.window.sessionStorage:类数组对象，会话级数据存储
+   在浏览器进程中分配一个内存，存储本次会话使用数据，此次会话中的所有页面都可以共享此数据，浏览器
+   一旦关闭了数据就消失
+   作用：在同一个会话中所有页面共享数据：昵称
+    sessionStorage[key]=value;            //保存数据
+    sessionStorage.setItem(key,value);    //保存数据
+    var value=sessionStorage[key];        //获取数据
+    var value=sessionStorage.getItem(key);//获取数据
+    sessionStorage.removeItem(key);       //删除一组数据
+    sessionStorage.clear();               //删除所有数据
+    sessionStorage.length;                //获取个数
+    var key=sessionStorage.key(i);        //获取第i个key
+ 2.window.localStorage
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+2018/3/27
+h5 新特性 Web Storage
+ 2.window.localStorage
+  类数组对象，本地存储（跨会话）
+  在浏览器所有管理外存（硬盘）中存储着用户专用数据，可供此次会话中后续页面共同使用，即使浏览器关闭
+  也不会消失，永久存储（作用：存储所有会话共享数据，使用很少）
+    localStorage[key]=value;            //保存数据
+    localStorage.setItem(key,value);    //保存数据
+    var value=localStorage[key];        //获取数据
+    var value=localStorage.getItem(key);//获取数据
+    localStorage.removeItem(key);       //删除一组数据
+    localStorage.clear();               //删除所有数据
+    localStorage.length;                //获取个数
+    var key=localStorage.key(i);        //获取第i个key
+h5 新特性 WebSocket
+ HTTP 协议：超文本传输协议
+  作用：传输网页资源（html/css/js/image/mp3...）
+  属于"请求-响应"，只有客户端发起请求消息，服务器才会返回响应消息，没有请求就没有响应，一个请求，只能
+  得到一个响应，此模型在有些场景力不从心：实时股票走势图
+   解决方案：长轮询/心跳请求：定时器+ajax
+   WebSocket协议：属于"广播-收听"，客户端连接到服务器就不再断开了，永久链接，双方都可以随时向对方发送消息，WS在实时股票走势图应用有着特别优势
+   WS协议的应用也分为客户端和服务器端版本
+   WS服务器的应用
+    监听指定端口，就收客户端请求，向对方发送消息，并接收消息，可以用PHP/JAVA/NODE.JS等编程语言实现
+   WS客户端的应用
+    主动发起连接请求，保存永久链接，向对方发送消息，并接收消息，可以HTML5对象
+    使用H5创建WS客户端应用
+     连接WS服务器：
+      var socket=new WebSocket("ws://127.0.0.1:9001");
+     向服务器发送消息
+      socket.send(str)
+     接受服务器发来的消息
+      socket.onmessage=function(e){e.data}
+     断开ws服务器
+      socket.close();

@@ -1,0 +1,92 @@
+1、Mysql中的简单查询———— 查询特定的列
+  示例：查询出所有员工的姓名和工资
+  SELECT ename,salary FROM emp;
+  练习：查询所有员工的编号、部门编号、生日、姓名生日
+  SELECT eid,deptId,birthday,ename,birthday FROM emp;
+  示例：查询出员工的所有信息
+  SELECT * FROM emp;
+
+2、Mysql中的简单查询———— 给列取别名
+   示例：查询员工的名字、性别，列名用中文呈现
+   SELECT ename 名字,sex 性别 FROM emp;
+    查询编号、姓名、工资、部门编号，要求列名用一个中文呈现
+    SELECT eid 编号,ename 名字,salary 月薪,deptId 部门编号 FROM emp;
+    查询编号、姓名、工资、部门编号，要求列名用一个英文字符呈现
+    SELECT eid i,ename n,salary s,deptId d FROM emp;
+
+3、Mysql中的简单查询———— 只显示不同的值/重复的值只显示一次
+   示例：查询出哪些部门编号下有员工
+   SELECT DISTINCT deptId FROM emp;
+   练习：查询公司中有哪些性别员工
+   SELECT DISTINCT sex FROM emp;
+
+4、Mysql中的简单查询————— 查询时执行运算
+   示例：查询时执行算数运算
+   SELECT 2+3;
+   示例：查询出每个员工的姓名、月薪、及其年薪
+   SELECT ename 名字,salary 月薪,salary*12 年薪 FROM emp;
+   练习：假设老板想查询每个员工每月加薪500，年底再一次性给20000，每个员工的姓名及其全年的总收入
+   SELECT ename 名字,salary+500 月薪,(salary+500)*12+20000 年薪 FROM emp;
+5、Mysql中的简单查询————— 条件查询
+   SELECT中也可以使用WHERE字句跟随一个查询记录的筛选条件,where后面可以跟多种比较运算符：=、!=不等于、>、>=、<、<=
+   示例：查询出编号为5的员工所有信息
+   SELECT * FROM emp WHERE eid=5;
+   示例：查询出10号部门的员工所有信息
+   SELECT * FROM emp WHERE deptId=10;
+   示例：查询出不在10号部门的员工所有信息
+   SELECT * FROM emp WHERE deptId!=10;
+   示例：查询出女员工所有信息
+   SELECT * FROM emp WHERE sex='F';
+   示例：查询出工资不小于6000的员工所有信息
+   SELECT * FROM emp WHERE salary>='6000';
+   示例：查询出1990年之前出生的员工所有信息
+   SELECT * FROM emp WHERE birthday<'1990-1-1';
+   练习：查询出没有部门的员工所有信息
+   SELECT * FROM emp WHERE deptId is NULL;
+
+6、Mysql中的简单查询————— 多条件查询
+    在条件查询中若有多个条件，可以使用：AND、OR进行组合
+    where 条件1 AND 条件2;
+    where 条件1 OR 条件2;
+   示例：查询出10号部门的男员工所有信息
+   SELECT * FROM emp WHERE deptId=10 and sex='M';
+   练习：查询10号、30号、50号部门的员工所有信息
+   SELECT * FROM emp WHERE deptId=10 OR deptId=30 OR deptId=50;
+   练习：查询工资在6000~8000员工所有信息
+   SELECT * FROM emp WHERE salary>=6000 AND salary<=8000;
+   练习：查询1990年出生员工所有信息
+   SELECT * FROM emp WHERE birthday>='1990-1-1' AND birthday<='1990-12-31';
+   
+7、Mysql中的简单查询—————模糊条件查询
+    模糊条件查询：在搜索字符串数据时，仅能提供字符串中的部分内容，其前/后可能有任意的其他字符。 
+    通配符：% 指代任意多个任意字符，
+            _ 指代一个任意字符
+    注意：上述两个通配符不能与=连用！必须与LIKE连用
+   示例：查询出姓名中包含字符E的员工信息
+   SELECT * FROM emp WHERE ename LIKE '%E%';
+   练习：查询姓名中倒数第二个字符为E员工所有信息
+   SELECT * FROM emp WHERE ename LIKE '%E_';
+
+8、Mysql中的简单查询—————查询结果集的排序
+   示例：查询所有员工的信息，按工资由高到低显示
+   SELECT * FROM emp ORDER BY salary;
+   练习：查询10号部门员工信息，按生日降序排列
+   SELECT * FROM emp ORDER BY birthday DESC;
+   练习：查询所有员工信息，按工资由低到高，若工资一样，再按姓名降序排列
+   SELECT * FROM emp ORDER BY salary,ename DESC;
+   练习：查询所有员工信息，按年龄由大到小，但所有女士必须排在男士之前(先按性别排，性别相同再按年龄)
+   SELECT * FROM emp ORDER BY sex,birthday;
+9、Mysql中的简单查询—————分页查询
+    当查询到的数据比较多时，一次无法全部显示，就可以使用分页查询。提示：Mysql中的分页查询方法是所有数据库中最简单
+     假设：每页最多可以显示5行数据
+     第1页：... LIMIT 0，5;     #0/1/2/3/4
+     第2页：... LIMIT 5，5;     #5/6/7/8/9
+     第3页：... LIMIT 10，5;     #10/11/12/13/14
+     第4页：... LIMIT 15，5;     #15/16/17/18/19
+     第n页：... LIMIT (n-1)*5，5;
+     练习：查询出所有用户信息，每页最多显示5行记录，显示第1页
+     SELECT * FROM emp LIMIT 0,5;
+     练习：查询出10号部门所有员工，按工资升序，每页最多显示4行记录，显示第1/2/3页
+     SELECT * FROM emp WHERE deptId=10 ORDER BY salary LIMIT 0,4;
+     SELECT * FROM emp WHERE deptId=10 ORDER BY salary LIMIT 4,4;
+     SELECT * FROM emp WHERE deptId=10 ORDER BY salary LIMIT 8,4;

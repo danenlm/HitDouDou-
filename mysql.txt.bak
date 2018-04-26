@@ -1,0 +1,536 @@
+2017.12.29笔记
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+学习网站：tooc.cn
+预习方法：code.tarea.com.cn/webcode找上一期学习的代码
+ftp：//176.202.0.158
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+1.课程介绍
+ （1）服务器：软件过程、数据库、后台语言
+ （2）Web核心：HTML、js、AJAX、css
+  (3) Web高级：JS高级、Bom&Dom、jQuery
+ （4）H5高级：HTML5高级特性、Bootstrap、Node.js
+  (5)三大框架：Vue、Angular、React
+  (6)移动端：Inoic、PhoneGap、微信
+
+2.程序员必备的素养
+  1、气势！
+     键速：350次/分钟
+     编码速度：1天1个页面 ———— 强调代码行数
+  2、经验！
+     页面效果：提高方法：百度搜“JS特效大全”
+     调试能力：debug ———— 抓住每一个错误都是经验
+      如何解决代码中的bug:
+         1、自己细细读错误提示（全英文，自己用软件翻译），自己解决
+	 2、分享你的错误给其他人
+	 3、询问项目经理
+	 4、询问授课讲师
+	 5、百度
+
+3.Windows操作系统常用的快捷键
+  Alt+tab: 在多窗口来回切换
+  Alt+Shif+tab: 在多窗口来回切换,从右到左
+  Win+d:显示/隐藏桌面
+  Win+e:显示资源管理器
+  Win+r:打开“运行”窗口  calc(计算器)/mspaint(画图)/notpad(记事本)/cmd(命令窗口)
+  Alt+F4：关闭窗口
+
+ 程序员的标准手指键位
+ 左手：ASDF   右手：上下左右
+ 练习：进入c:/xampp/htdocs,删除其中已有的所有内容，重新创建目录WEB1712，创建day01.docs————要求全程不用鼠标
+
+4.软件工程
+  IBM：DOS  ———— BIll Gates=> MicroSoft=>Windows
+  软件工程：
+    1、软件过程
+    2、软件测试
+    3、软件度量
+    4、软件标准
+
+  软件过程/软件生命周期（三个时期八个阶段）———— 重点知识：
+    1、软件定义期
+       i、可行性研究阶段 ————《可行性研究报告》
+            时间、资金、技术、人力、政策、风俗、回报率
+       ii、需求分析阶段 ————《需求说明书》
+            头脑风暴：名词、动词，功能性需求、非功能性需求
+    2、软件开发期
+       iii、概要设计阶段 ————《概要设计说明书》
+            技术选型、子系统划分、模块设计、数据说明
+       iv、详细设计阶段 ————《详细设计说明书》
+            接口、函数、对象、算法
+       v、编码实现阶段 ————《项目开发月报》
+            UI设计（Photoshop/Axure）、
+	    前端开发（HTML/CSS/JS/框架）、
+	    后台数据处理（Java/PHP/.Net/Node.js/Python）
+       vi、测试阶段 ————《软件测试报告》
+            找出代码中的Bug
+    3、软件维护期
+       vii、项目部署阶段
+            将项目由“开发模式（Dev Mode）”转到“产品模式（ProductMode）”
+       viii、项目维护阶段
+            修改项目的运行问题，进行适当的扩展
+
+5.项目目标————学子商城
+  概要设计：
+   前台（PC版）子系统：
+        商品模块：首页展示、列表、详情
+	用户模块：注册、登录、修改信息、收藏夹
+	购物车模块：添加、修改、删除内容、下单
+   前台（APP版）子系统：
+        商品模块：首页展示、列表、详情
+	用户模块：注册、登录、修改信息、收藏夹
+	购物车模块：添加、修改、删除内容、下单
+   后台子系统/管理端： 
+        商品模块：列表、添加、删除、修改商品
+	用户模块：列表、删除、修改
+	订单模块：列表、删除、修改订单
+
+6.服务器概述
+  server：即指一种可以为其他计算机提供服务的硬件计算机，又指一种可以向其他计算机提供特定服务的软件程序
+  客户端如何访问远程的服务器：
+   1、服务器地址：域名或IP地址
+   2、特定服务的端口号（端口号最大值：65535）
+   3、客户端与服务器通信所用的协议
+      如：https://www.baidu.com：443 (https就是协议)(www.baidu.com就是域名)(:443就是端口号)
+   ps:127.0.0.1 任何计算机都具有该IP地址，指代自己；
+      localhost 任何计算机都具有该域名，指代自己；
+   如何测试自己与目标计算机是否联通：
+      ping 目标计算机的域名或IP地址
+   如何查看自己的局域网IP地址：
+      ipconfig 
+   ps:在cmd窗口输入该命令后，IPv4 地址就是当前计算机的IP地址
+
+   练习：搭建一个自己的Web服务器，让同桌访问
+    1、服务器端：安装一款Web服务器 ————Apache
+         www.xampp.org 下载
+	 默认安装在：c:/xampp/目录下
+    2、服务器端：启动Web服务器
+    3、服务器端：编写一个网页，保存在Web服务器中
+       可以被客户端访问的网页必须保存在
+         c:/xampp/htdocs
+	 ps:必须先删除该目录下的已有所有内容
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    4、客户端：通过IP地址访问远程的Web服务器中的内容
+
+2018.1.2笔记
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   
+   数据存储方式
+   1、内存：速度快、容量有限、非永久
+   2、自定义结构文：使用简单，但不便于大量数据查找
+   3、Excel/Access等格式化文件：使用
+   4、专用文件服务器：网络存储，可靠性高
+   5、数据库服务器：存取效率高，尤其适合海量数据的存储，操作复杂（最实用）
+  一、 数据库概述
+    Database:数据仓库，以一定的结构存储数据的软件
+  二、 数据库的种类
+   1、网状数据库：20世纪60年代初
+   2、层次数据库：20世纪60年代末
+   3、关系型数据库（RDBMS）：20世纪70年代末IBM提出，至今
+   4、非关系型数据库（NOSQL）：21世纪初提出
+  三、常见的数据库产品： 
+  1、类型
+  微型数据库：  SQLite
+  中小型数据库：MySQL
+                PostgreSQL
+  中型数据库 ： SQLServer(微软)：兼容性差，花费高
+  大型数据库 ： Oracle,DB2
+  2、MySQL数据库
+     MySQL.com：由Oracle公司维护的开源数据库
+     MariaDB.org:由Martin维护的开源数据库
+     MySQL系统分为两部分：
+     （1）服务器端：负责永久存储数据、管理数据————人不能直接读写
+     （2）客户端：负责连接到服务器，向服务器发送增删改查命令————SQL语言
+
+  3、使用MySQL数据库的步骤：
+    1、服务器端：安装MySQL的服务器端软件(mysqld里的"d"代表：Demon：精灵、守护程序、服务器端程序)
+        c:/xampp/mysql/bin/mysqld.exe
+    2、服务器端：启动MYSQL服务器端软件
+        保证mysqld.exe占用3306端口
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    3、客户端：安装任意一款MySQL的客户端软件
+         c:/xampp/mysql/bin/mysql.exe
+    4、客户端：运行客户端连接到远程的服务器上（在Windows窗口输入）
+        # mysql.exe -h127.0.0.1 -P3306 -uroot -p
+	            -h:host     -P:port(大写P)  -u:user -p:password（小写p）
+        ps:可以简写为：mysql -uroot
+       ps:MySQL服务器中数据的逻辑结构
+       Server =>Database =>Table =>Row =>Columm
+       服务器   数据库     表      行    列
+    练习：使用MySQL客户端工具连接到服务器上，显示出所有的数据，再断开服务器的连接————刻意书写错误的指令，看看常见的错误信息
+    5、常用的MySQL管理命令（在MariaDB内输入，命令后必须带“；”）
+        show databases；   显示服务器上有哪些数据库
+	use 库名；         开始进入某个库
+	show tables;       显示当前库中有哪些表
+	describe 表名；    描述某个表的结构/列
+	quit；             断开服务器的连接
+   练习：查看Mysql默认自带的五个库各有多少表
+    6、常用的SQL语句  ——————重点
+       Structured Query Language:结构化查询语言，用于操作（增删改查）关系型数据库服务器中的数据的。最先由IBM公司提出的，后来交给ISO成为行业的标准语言，分为若干版本：SQL-89，SQL-92，SQL-99等。目前主流的关系型数据库软件都支持相同的SQL语言标准。
+       SQL语句的两种执行方法：
+       （1）交互式执行：输入一行执行一行....，适用于临时性的查看数据
+           mysql -uroot
+       （2）脚本式执行：把要执行的多条命令编写在一个文件中，一次性提交给服务器执行，适用于批量执行数据的修改
+           mysql -uroot < c:/.../2.sql 回车
+	注意：1、脚本文件中若某行代码有执行错误。则此行以及后面的代码不会执行
+	      2、脚本文件中的注释不会被服务器执行
+	         单行注释：  #语句
+		 多行注释：  /*语句*/
+	      3、SQL命令不区分大小写，习惯上，系统专用关键字用大写形式；非关键字用小写形式
+	 常用SQL语句：
+	 1、DROP DATABASE IF EXISTS 库名；（丢弃库）
+
+	 2、CREATE DATABASE 库名；（创建库）
+
+	 3、CREATE TABLE 表名（列， 列， 列）；（创建表）
+
+	 4、INSERT INTO 表名 VALUES（值，值，值）；（创建行）
+
+	 5、DELETE FROM 表名；（删除所有行，几乎不用）
+	    DELETE FROM 表名 WHERE 条件；（删除符合条件行）
+
+	 6、UPDATE 表名 SET 列=值，列=值，列=值；（修改所有行的某些值）
+	    UPDATE 表名 SET 列=值，列=值，列=值 WHERE 条件；（修改满足条件行的某些值）
+
+	 7、SELECT * FROM 表名；（查询表中所有数据：*代表所有）
+
+练习：创建一个新的脚本文件4.sql,重新创建（先丢弃再创建）一个数据库xuezi，进入该数据库，创建一个表laptop，其中包含如下的列：
+       lid、  title、   price、   spec
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+2018/1/3
+复习： MySQL服务器中数据的逻辑结构
+       Server =>Database =>Table =>Row =>Columm
+       服务器   数据库     表      行    列
+使用客户端连接MYSQL服务器的两种方式
+     1、交互模式：mysql -uroot
+     2、脚本模式：mysql -uroot < 文件路径
+练习：编写脚本文件1.SQL，创数据库xuezi,进入库，创建用户信息表xz_user,包含：uid,uname,upwd,phone,avater(头像)，sex,is_online（当前是否在线）,registerTime(注册时间)，插入4行记录，删除编号1，修改编号3，查询所有数据
+今日目标：
+  （1）、数据库中的乱码问题————了解
+  （2）、列类型————重点
+  （3）、列约束————重点、难点
+1、数据库中的乱码问题
+   面试题：数据乱码产生的原因？
+   ASCII码字符集：为每一个英文/标点字符都指派了一个对应的数字（总共只有127个字符）
+   GB2312字符集：为英文/标点/常用汉字都指派了一个对应的数字，兼容ASCII码
+   GBK字符集：为英文/标点/常用汉字都指派了一个对应的数字，兼容GB2312码，并扩展了很多不常用的汉字
+   BIG5字符集：台湾同胞对英文/标点/常用繁体汉字都指派了一个对应的数字，兼容ASCII码
+   Unicode字符集:由ISO推出的对世界上主流语言的常用符号（6万多个字符）都指派了一个对应的数字，兼容ASCII码；存储时分为UTF-8、UTF-16、UTF-32三种存储方式
+   结论：计算机中字符乱码产生的根源：
+         对字符串进行编码使用一套字符集；解码时使用了另一套不兼容的字符集。
+   解决办法：字符串进行编码和解码时使用同一套字符集
+
+   （1）脚本文件必须另存为UTF-8
+   （2）客户端连接服务器所用的编码为UTF8    SET NAMES UTF8
+   （3）数据库存储数据所用的编码为UTF8      在CREATE TABLE 表名 CHARSET=UTF8
+2、MySQL中的列类型
+   CREATE TABLE 表名（列名 列类型  列名 列类型）
+   MySQL中要求在声明列名时必须指定该列上数据的类型
+   提示：每种数据库中列类型各不相同————查看手册
+   MySQL中的列类型分为三种——————重点
+   （1）数值类型--- 数据可用可不用引号括起来
+        TINYINT:微整数，占用1字节，表示-128~127
+	SMALLINT:小整数，占用2字节，表示-32768~32767
+	INT:整数，占用4字节，表示-2147483648~2147483647
+	BIGINT：大整数，占用8字节，表示-9223372036854775808~9223372036854775807
+	FLOAT（M,D）:单精度浮点小数，占用4字节，最大3.4E38
+	DOUBLE（M,D）:双精度浮点小数，占用8字节，最大1.79769E308
+	DECIMAL（M,D）：定点小数，不会产生四舍五入的精度丢失,
+	   ps:M代表总的有效位数，D表示小数点后面的位数
+	BOOL:布尔类型，只能取值true或false注意：MYSQL没有真正的BOOL！true等价于1，false等于0
+	     true或false不能用引号括起来，否则无法识别
+   （2）日期时间类型---- 数据必须用引号括起来
+        DATE:日期类型 ‘****-*-*’
+	TIME:时间类型 ‘**：**：**’
+	DATETIME:日期时间类型 ‘****-*-* **：**：**’
+   （3）字符串类型
+        CHAR（M）:定长字符串，操作速度远快于变长字符串 如：手机号码，M不能超过255
+	VARCHAR（M）:变长字符串，可以更加节省空间 如：简历，M不能超过65535
+	TEXT（M）:大型变长字符串，M不能超过2G
+3、列约束————小难点
+     Constraint：约束，在数据库中插入的数据一般都是有限制的，如编号不能重复、性别只能取为男或女、登陆的用户密码不能为空、工资不能为负数......称为“列上的约束”。
+     CREATE TABLE 表名（列名 列类型 列约束，列名 列类型 列约束）
+   MySQl中提供的如下六种约束：
+     （1）主键约束———— PRIMARY KEY
+          声明为主键约束的列，不能出现重复值，也不能出现空值（NULL）,表中所有的数据会按照主键列上的由小到大自动排序（加快查找速度）————一个表中只能声明一个主键列！
+    ** 空值（NULL）：有些数据必须存在，但是目前还无法确定其具体的值，可以赋值为NULL，NULL不是重复值
+     （2）唯一约束———— UNIQUE
+          声明为唯一约束的列，不能出现重复值，但可以任意多个出现NULL值———— 一个表中可以声明多个唯一约束列！
+     （3）非空约束———— NOT NULL
+          声明为非空约束的列，不能出现NULL值，但可以出现重复值
+   ***注意：PRIMARY KEY 会自动排序，只能有一个列，UNIQUE NOT NULL不能自动排序，可以有多个列
+     （4）默认值约束————— DEFAULT
+          声明了默认值的列，可以无需手工指定值，而自动套用默认值
+	  使用方法：CREATE TABLE 表名（列 值 DEFAULT '默认值'）
+     （5）检查约束————— CHECK
+          检查约束可以对插入的值的范围进行限定———— MySQL不支持检查约束————检查约束会影响插入/修改的效率
+	  如：CREATE TABLE worker（age INT CHECK(age>=18 AND age<=60);
+     （6）外键约束———— FOREIGN KEY
+          一个表中的外键列上，可以出现重复值，也可以出现NULL值，但是只要有确定的值，其取值范围必须在另一个表的主键列上出现过
+	  如：CREATE TABLE emp(
+	    ....
+	    deptID INT,
+	    FOREIGN KEY(deptID) REFERENCES dept(did)
+	    );
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+2018-1-4
+今日目标：
+1小知识点
+2简单查询———— 重点
+3复杂查询———— 难点
+一、小知识点：数据库中如何存储日期时间最合适
+  1、使用VARCHAR存储：不便于比较大小
+  2、使用DATE/DATETIME存储：便于比较大小，但是不便于实现国际化
+     中国人习惯：yyyy-mm-dd，
+     美国人：mm-dd-yyyy,
+     欧洲人: dd/mm/yyyy,
+     internationalization:i18N,国际化，对不同语言/风俗习惯的用户可以呈现不同的数据格式/内容
+  3、使用大整数（BIGINT）来表示
+     好处：容易比较大小，可以很方便转换为任意一种语言的格式，便于项目实现国际化
+     计算机是如何存储时间日期？
+     用一个数字来表示，记录指定的时间距离计算机元年（1979-1-1 0:0:0）经过了多少毫秒，如：
+     0                  =>   1970-1-1 0:0:0
+     1000               =>   1970-1-1 0:0:1
+     1000*60            =>   1970-1-1 0:1:0
+     1000*60*60         =>   1970-1-1 1:0:0
+     1000*60*60*24      =>   1970-1-2 0:0:0
+     1000*60*60*24*365  =>   1971-1-1 0:0:0
+     任何编程语言都可以很容易把数字转换成日期时间
+
+  4、如何使用自增数字？
+     Mysql所独有：可以将整数型的主键列声明为“自增列”，接下来插入的记录会自动在当前已有数据的最大值基础上再+1，自增列上也可以手动赋值
+     CREATE TABLE emp(eid INT PRIMARY KEY AUTO_INCREMENT);
+     INSERT INTO emp VALUES(NULL);   #1
+     INSERT INTO emp VALUES(NULL);   #2
+
+二、简单查询
+ 1、Mysql中的简单查询———— 查询特定的列
+  示例：查询出所有员工的姓名和工资
+    SELECT ename,salary FROM emp;
+  练习：查询所有员工的编号、部门编号、生日、姓名生日
+    SELECT eid,deptId,birthday,ename,birthday FROM emp;
+  示例：查询出员工的所有信息
+    SELECT * FROM emp;      #*指代所有的列名
+
+2、Mysql中的简单查询———— 给列取别名
+   示例：查询员工的名字、性别，列名用中文呈现
+    SELECT ename AS "姓名",sex AS "性别" FROM emp;
+    查询编号、姓名、工资、部门编号，要求列名用一个中文呈现
+    SELECT eid AS 编号,ename AS "姓名",salary AS 工资,deptId AS "部门编号" FROM emp;
+    查询编号、姓名、工资、部门编号，要求列名用一个英文字符呈现
+    SELECT eid AS a,ename AS b,salary AS c,deptId AS d FROM emp;
+
+3、Mysql中的简单查询———— 只显示不同的值/重复的值只显示一次
+   示例：查询出哪些部门编号下有员工
+   SELECT DISTINCT deptId FROM emp;
+   提示：distinct翻译为“不同的”
+   练习：查询公司中有哪些性别员工
+   SELECT DISTINCT sex FROM emp;
+
+4、Mysql中的简单查询————— 查询时执行运算
+   示例：查询时执行算数运算
+    SELECT (1+2)*8/76 AS 运算;
+   示例：查询出每个员工的姓名、月薪、及其年薪
+   SELECT ename 姓名,salary 月薪,salary*12 年薪 FROM emp;
+   练习：假设老板想查询每个员工每月加薪500，年底再一次性给20000，每个员工的姓名及其全年的总收入
+   SELECT ename 姓名,salary+500 新月薪,(salary+500)*12+20000 年薪 FROM emp;
+
+5、Mysql中的简单查询————— 条件查询
+   SELECT中也可以使用WHERE字句跟随一个查询记录的筛选条件,where后面可以跟多种比较运算符：=、!=不等于、>、>=、<、<=
+   示例：查询出编号为5的员工所有信息
+   SELECT * FROM emp WHERE eid=5;
+   示例：查询出10号部门的员工所有信息
+   SELECT * FROM emp WHERE deptId=10;
+   示例：查询出不在10号部门的员工所有信息
+   SELECT * FROM emp WHERE deptId!=10;
+   示例：查询出1女员工所有信息
+   SELECT * FROM emp WHERE sex='F';
+   示例：查询出工资不小于6000的员工所有信息
+   SELECT * FROM emp WHERE salary>=6000;
+   示例：查询出1990年之前出生的员工所有信息
+   SELECT * FROM emp WHERE birthday<'1990-1-1';
+   练习：查询出没有部门的员工所有信息
+   SELECT * FROM emp WHERE deptId is NULL;
+
+6、Mysql中的简单查询————— 多条件查询
+    在条件查询中若有多个条件，可以使用：AND、OR进行组合
+    where 条件1 AND 条件2;
+    where 条件1 OR 条件2;
+    示例：查询出10号部门的女员工所有信息
+   SELECT * FROM emp WHERE deptId=20 AND sex='F';
+   练习：查询10号、30号、50号部门的员工所有信息
+   SELECT * FROM emp WHERE deptId=10 OR deptId=30 OR deptId=50;
+   SELECT * FROM emp WHERE deptId IN (10,30,50);            #简写方式
+   练习：查询工资在6000~8000员工所有信息
+   SELECT * FROM emp WHERE salary>=6000 AND salary<=8000;
+   等价于SELECT * FROM emp WHERE salary BETWEEN 6000 AND 8000;
+   练习：查询1990年出生员工所有信息
+   SELECT * FROM emp WHERE birthday>='1990-1-1' AND birthday<='1990-12-31';
+   SELECT * FROM emp WHERE birthday BETWEEN '1990-1-1' AND '1990-12-31';
+   练习：查询10号、30号、50号部门工资在6000~8000而且是1990年出生员工所有信息
+   SELECT * FROM emp 
+   WHERE (deptId=10 OR deptId=30 OR deptId=50) 
+   AND (salary>=6000 AND salary<=8000) 
+   AND (birthday>='1990-1-1' AND birthday<='1990-12-31');
+
+7、Mysql中的简单查询—————模糊条件查询
+    模糊条件查询：在搜索字符串数据时，仅能提供字符串中的部分内容，其前/后可能有任意的其他字符。 
+    通配符：% 指代任意多个任意字符，
+            _ 指代一个任意字符
+    注意：上述两个通配符不能与=连用！必须与LIKE连用
+   示例：查询出姓名中包含字符E的员工信息
+   SELECT * FROM emp WHERE ename LIKE '%E%';
+   练习：查询姓名中倒数第二个字符为E员工所有信息
+   SELECT * FROM emp WHERE ename LIKE '%E_';
+
+8、Mysql中的简单查询—————查询结果集的排序
+   示例：查询所有员工的信息，按工资由高到低显示
+   SELECT * FROM emp ORDER BY salary;       #默认升序，从小到大
+   SELECT * FROM emp ORDER BY salary ASC;   #ASC升序（ascendant）
+   SELECT * FROM emp ORDER BY salary DESC;  #DESC降序（descendant）
+   练习：查询10号部门员工信息，按生日降序排列
+   SELECT * FROM emp WHERE deptId=10 ORDER BY birthday DESC;
+   练习：查询所有员工信息，按工资由低到高，若工资一样，再按姓名降序排列
+   SELECT * FROM emp ORDER BY salary, ename;
+   练习：查询所有员工信息，按年龄由大到小，但所有女士必须排在男士之前(先按性别排，性别相同再按年龄)
+   SELECT * FROM emp ORDER BY sex,birthday;
+
+9、Mysql中的简单查询—————分页查询
+    当查询到的数据比较多时，一次无法全部显示，就可以使用分页查询。提示：Mysql中的分页查询方法是所有数据库中最简单
+      SELECT ...   FROM ... WHERE ... ORDER BY ... LIMIT start,count;
+     假设：每页最多可以显示5行数据
+     第1页：... LIMIT 0，5;     #0/1/2/3/4
+     第2页：... LIMIT 5，5;     #5/6/7/8/9
+     第3页：... LIMIT 10，5;     #10/11/12/13/14
+     第4页：... LIMIT 15，5;     #15/16/17/18/19
+     第n页：... LIMIT (n-1)*5，5;
+     练习：查询出所有用户信息，每页最多显示5行记录，显示第1页
+     SELECT * FROM emp LIMIT 0,5;
+    练习：查询出10号部门所有员工，按工资升序，每页最多显示4行记录，显示第1/2/3页
+     SELECT * FROM emp WHERE deptId=10 ORDER BY salary LIMIT 0,4;
+     SELECT * FROM emp WHERE deptId=10 ORDER BY salary LIMIT 4,4;
+     SELECT * FROM emp WHERE deptId=10 ORDER BY salary LIMIT 8,4;
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+2018-1-5
+一、今日目标：
+1、复杂查询———— 难点
+2、Web服务器和PHP语言————— 重点&简单
+
+复习：列约束中，在项目中，主键约束是必须的，其他会影响效率，可选择性加入
+补充小知识点：项目中如何存储性别？
+  （1）CHAR(1):'男'或'女'，不便于实现“国际化（i18n）”
+  （2）INT:
+       编码:男=>1    女=>0
+       解码:1=>男/M  0=>女/F
+     类似的：保存订单状态（1-待付款 2-备货中 3-运输中 4-派送中 5-已签收）
+二、Mysql中的复杂查询—————聚合查询、分组查询、跨表查询
+    1、聚合查询
+    Mysql中提供了5个聚合查询函数：
+    COUNT()、   #数数
+    SUM()、     #求和
+    AVG()、     #平均
+    MAX()、     #最大
+    MIN()       #最小
+    YEAR()      #提取年
+    *Function:函数，功能体，可用于接收若干数据，加以组合处理，最终返回处理后的结果*
+    示例：查询所有员工的数量
+    SELECT COUNT(eid) FROM emp;       #14
+    SELECT COUNT(deptId) FROM emp;    #13
+    SELECT COUNT(ename,deptId) FROM emp;   #Mysql不支持
+    SELECT COUNT(*) FROM emp;         #14  推荐写法
+    练习：查询出10号部门员工工资总和
+    SELECT SUM(salary) FROM emp WHERE deptId=10;
+    练习：查询出20号部门员工平均工资
+    SELECT AVG(salary) FROM emp WHERE deptId=20;
+    练习：查询出所有女员工工资最大值和最小值
+    SELECT MAX(salary) FROM emp WHERE sex='F';
+    SELECT MIN(salary) FROM emp WHERE sex='F';
+或者SELECT MAX(salary),MIN(salary) FROM emp WHERE sex='F';
+    练习：查询出员工年龄最大生日
+    SELECT MIN(birthday) FROM emp;
+    示例：查询出每个部门的编号以及部门的员工数量
+    SELECT deptId,COUNT(eid) FROM emp GROUP BY deptId;    #按照部门编号先分组，再聚合计算
+    2、分组查询
+    分组查询（GROUP BY）中，SELECT后面要么查询分组条件列，要么查询其他列的聚合函数；不能直接查询其他列上的内容
+    练习：查询每个部门编号，以及该部门的工资的最大值和最小值
+    SELECT deptId,MAX(salary),MIN(salary) FROM emp GROUP BY deptId;
+     练习：查询出男/女员工工资的总和和平均值
+    SELECT sex,SUM(salary),AVG(salary) FROM emp GROUP BY sex;
+
+三、Mysql中的复杂查询—————子查询
+    示例：查询出比TOM工资高的员工的所有信息
+    步骤1：查询出TOM的工资
+    SELECT salary FROM emp WHERE ename='TOM';  =>6000
+    步骤2：查询出比TOM高的工资
+    SELECT * FROM emp WHERE salary>6000;
+    综合:在步骤2中嵌入步骤1，步骤2—父查询 步骤1—子查询
+    SELECT * FROM emp WHERE salary>(
+       SELECT salary FROM emp WHERE ename='TOM'
+    );
+    练习：查询出比TOM年长员工的信息
+    SELECT * FROM emp WHERE birthday<(
+       SELECT birthday FROM emp WHERE ename='TOM'
+    );
+    练习：查询出研发部所有员工的信息
+    步骤1：查询出研发部编号
+    SELECT did FROM dept WHERE dname='研发部';  =>10
+    步骤2：查询出研发部所有员工
+    SELECT * FROM emp WHERE deptId=10;
+    综合：
+    SELECT * FROM emp WHERE deptId=(
+      SELECT did FROM dept WHERE dname='研发部'
+    );
+    练习：查询出与TOM在同一部所有员工的信息
+    SELECT * FROM emp WHERE deptId=(
+      SELECT deptId FROM emp WHERE ename='TOM'
+    );
+    练习：查询出工资高于公司平均工资员工的信息
+    SELECT * FROM emp WHERE salary>(
+      SELECT AVG(salary) FROM emp
+    );
+    练习：查询出与TOM同一年员工的信息
+    步骤1、查询出TOM的生日中的年份
+    步骤2、查询出生日中年份与TOM的员工信息
+    SELECT * FROM emp WHERE YEAR(birthday)=(
+      SELECT YEAR(birthday) FROM emp WHERE ename='TOM'
+    );
+    *如何获取一个日期中的年份：
+    SELECT YEAR'1990-1-1'
+
+三、Mysql中的复杂查询—————跨表查询
+    跨表查询：一次查询需要结果集的数据来自多个表
+    *注意：跨表查询一定要注意防止出现‘笛卡尔积’
+    说明：跨表查询必须有两个表的连接条件，以防止出现‘笛卡尔积’
+   示例：查询每个员工的姓名及其所在部门的名称
+       SELECT ename,deptId,did,dname
+       FROM emp,dept
+       WHERE deptId=did;   #SQL-92版本的跨表查询
+     上述跨表查询有缺陷：无法显示出‘没有部门的员工’、‘没有员工的部门’，SQL-99标准对此进行了改进：
+     （1）内连接查询 INNER JOIN ———— 与SQL-92版本效果一样
+       SELECT ename,dname
+       FROM emp INNER JOIN dept
+       ON deptId=did;
+     （2）左外连接查询 LEFT OUTER JOIN ———— 要显示‘左侧表’中的所有数据，即使右侧表中没有对应项
+       SELECT ename,dname
+       FROM emp LEFT OUTER JOIN dept
+       ON deptId=did; 
+     （3）右连接查询 RIGHT OUTER JOIN ———— 要显示‘右侧表’中的所有数据，即使右侧表中没有对应项
+       SELECT ename,dname
+       FROM emp RIGHT OUTER JOIN dept
+       ON deptId=did;
+     （4）全连接查询 FULL JOIN ———— 可以显示左侧表和右侧表中所有的数据，即使对方表中没有对应的数据——— mysql不支持全连接
+     （5）扩展小知识————mysql中查询结果集的‘合并’
+       合并：把多个查询结果集合并到一个集合里
+       (SELECT ename FROM emp_cn)       #emp_cn是假设出来的中国名单
+       UNION
+       (SELECT ename FROM emp_us);      #emp_us是假设出来的中国名单
+       UNION会合并两个集合中的一样的数据，如果不希望相同数据合并使用：
+       UNION ALL
+     练习：查询出所有员工的姓名及其所在部门的名称，要求显示出所有的员工（包括没有部门的员工），以及所有的部门（包括没有员工的部门）
+       (SELECT ename,dname
+       FROM emp LEFT OUTER JOIN dept
+       ON deptId=did)
+       UNION
+       (SELECT ename,dname
+       FROM emp RIGHT OUTER JOIN dept
+       ON deptId=did);
+      

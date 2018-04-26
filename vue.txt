@@ -1,0 +1,305 @@
+4.16
+1.框架
+ 框架 framework：基于项目的构建，更多的是关注数据
+ 库 library：基于某一个点
+ 三大框架：Vue angular react
+2.Vue框架
+ 1.概述
+  vue是一款渐进式的JavaScript的框架
+  特点：
+   1.完善的中文文档手册
+   2.上手容易
+   3.体积非常小
+   4.采用了MVVM的设计模式
+ 2.安装使用
+  1.通过script标签导入vue.js文件
+  2.通过命令行安装
+3.插值表达式
+ 双花括号{{expression}}
+4.指令
+ 其实就是扩展了html的标签属性
+ 1.选择指令
+  v-if="boolean" 根据条件来判断是否渲染当前的标签
+  v-else-if="boolean"
+  v-else 默认的
+ 2.循环指令
+  v-for='item in list' item 表示数组中每一个元素
+  v-for='(item,index) in list' item 表示数组中每一个元素 index 表示下标
+ 3.绑定事件
+  1.语法：
+   <any v-on:event="handleEvent"></any>
+   <any @event="handleEvent"></any>
+  2.功能：
+   给指定的标签 绑定对应的事件以及对应的处理函数
+    new Vue({
+     methods:{
+      handleEvent:function(){}
+     }
+    })
+  3.事件修饰符
+   @click.prevent  取消默认操作
+   @click.stop  取消事件冒泡
+ 4.属性绑定指令
+  1.v-bind:属性/:属性
+   <ANY v-bind:属性="表达式">
+   <ANY :属性="表达式">
+  2.style绑定，class绑定
+   <ANY v-bind:style="{样式名:表达式,样式名:表达式}">
+   <ANY :style="{样式名:表达式,样式名:表达式}">
+ 5.双向数据绑定
+  1.只能在表单中使用
+   <input/select/textarea v-model="表达式"/>
+  2.事件修饰符
+   v-model.number 把里面的值转换为数字
+ 6.v-html和v-text
+  1.v-html 会把数据中html代码正确的渲染成标签的形式
+  2.v-text 会把数据中html代码渲染成文本格式，和插值表达式结果一值
+  共同点：两个指令都会把之前标签之间的内容清空
+ 7.v-if 和v-show
+  相同点：都是控制标签是否显示在页面中，如果false不显示
+  不同点：v-if如果是true，就把结果渲染出来，否则不渲染
+          v-show无论true还是false都会渲染，只是false会添加display:none
+5.组件
+ 组件就是html的扩展，用于把html标签封装起来
+ 1.组件的使用
+  1.创建组件
+   Vue.component('my-compoment',{
+    template:'<h3>this is a new tag</h3>'
+   })
+  2.调用组件
+   <my-component></my-component>
+ 2.注意事项
+   1.在组件中只有一个根标签，里面可以嵌套多个标签
+   2.组件创建位置一定是在实例化vue对象之前
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+4.17
+1.自定义指令
+ 1.创建
+  Vue.directive('change',{
+        bind:function (el,binding) {
+	  //第一次绑定时，执行
+          //el 绑定的dom元素
+	  //binding 指令的相关信息，获取参数：binding.value
+        },
+	update:function(){
+	  //在数据更新时执行
+	},
+	inserted:function(){
+	  //完全挂载在页面上执行
+	}
+   })
+ 2.调用
+ 3.创建局部指令
+   new Vue({
+    directives:{
+       'color':{}
+    }
+   })
+  使用说明：局部指令只能在当前vue实例中使用
+2.过滤器
+ 作用：是用于将数据筛选，转换成我们想要的格式
+ 1. Vue.filter('myfilter',function(原数据,arg){
+	return 改变后的数据
+	//arg 就表示过滤器调用时的实参
+    })
+ 2.{{msg | myfilter(boolean)}}
+ 3.局部过滤器
+   new Vue({
+     filters:{
+       'myfilter',function(原数据,arg){
+	return 改变后的数据
+	//arg 就表示过滤器调用时的实参
+	}
+     }
+   })
+3.注意：局部组件只能在局部使用，不能再
+4.生命周期
+ 在vue实例中，都有自己的生命周期
+ Vue组件的生命周期可以分为4个阶段
+  create:初始化
+   beforeCreate 基本初始化，不会初始化data数据
+   created 初始化data中的数据
+  mount：在组件挂载前后
+   beforeMount 数据渲染到视图之前
+   mounted 数据已经渲染到视图之中
+  update：数据发生变化 判断
+  destroy：清理工作
+5.常用属性
+ data/methods/template/directives/fiters/componentes/周期函数/watch/computed
+ watch：监听属性，可以监听数据的变化 让执行指定的处理函数
+  前提：结合着双向数据绑定
+ computed：计算属性，常用于一些复杂的业务逻辑，带有缓存功能，如果数据没有变化，只会取一次
+  注意：在视图中使用时，直接写名称
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+4.18
+1.组件间的通信
+  通信 ---- 数据的传递
+ 1.父组件往子组件中传递数据
+  1.第一种方式
+   1.传递
+    <son title="this is a msg" id="1"></son>
+   2.接收
+    Vue.component('son',{
+        props:['title','id'],
+	template:`<h2>{{id}}-------{{title}}</h2>`
+    });
+  2.通过parent获取父组件中数据
+    在子组件中 this.$parent.uname 
+ 2.子组件往父组件中传递数据
+  1.第一种方式
+   1.在父组件创造一个自定义事件
+    <son @customEvent="revMsg"></son>
+   2.在子组件中触发父组件中定义的事件
+     Vue.component('son',{
+        template:`<div>
+                    <button @click="say">say</button>
+                </div>`,
+        methods:{
+            say:function () {
+                    this.$emit('customEvent','老爸，给钱耍朋友！！');
+            }
+        }
+  2.第二种方式
+   1.给子组件起个别名(ref)
+   2.在父组件中，通过ref来找到子组件
+     this.$refs.myson.uname
+ 3.兄弟组件之间通信
+  1.创建总线 var bus=new Vue();
+  2.创建自定义事件（在mounted中）
+    bus.$on('customEvent',function(msg){})
+  3.在另一个兄弟组件中触发
+    bus.$emit('customEvent','需要传递的数据')
+2.模板的书写方式
+ 1.在组件中的template单独写html标签
+ 2.通过单独创建script标签
+    <script type="x/template" id="mycom">模板标签</script>
+   通过组件中template:'#mycom'
+ 3.组件中格式 .vue文件
+    <template>模板</template>
+    <script>组件中属性(例如data,methods)</script>
+    <style></style>
+3.v-for遍历组件
+  注意：<todo-item v-for="(temp,index) in myMsg" :key="index">
+  key是在遍历组件的时候需要添加的属性，特点是具有唯一性，类似于数据库中的id
+4.路由模块
+  是用来管理组件和路径之间对应关系
+  SPA：单页Web应用（single page web application）
+  web app 中应用广泛
+  步骤
+   1.引入路由插件
+   2.创建组件，并添加到变量中
+   3.通过new VueRouter()进行路由创建
+   4.在创建的路由中，进行配置(路径和组件对应)
+   5.把创建好的路由注册到Vue实例中
+   6.在vue视图中，添加router-view标签
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+4.19
+1.路由模块
+ 1.路由执行过程
+  1.对浏览器中的路径进行解析
+  2.通过解析的路径来找对应的组件
+  3.在组件中，通过ajax获取数据
+  4.把获取的数据渲染到页面上
+ 2.路由配置注意事项
+  路由配置redirect改变路径的指向
+  path中的*，如果以上都没有匹配，自动指向的组件
+ 3.路由跳转
+  1.通过路由跳转，会被渲染成a标签
+   <router-link to="/login">登录</router-link>
+  2.通过js
+   通过一个点击事件，执行this.$router.push('reg')
+ 4.路由中传递参数
+  1.传递  /detail/2
+  2.接收  在路由配置中 path:'/detail/:id'
+     就表示是要通过id属性来接收所传递的参数
+     this.$route.params.id
+ 5.router 单词汇总
+   routes 配置路由
+   router 注册路由实例
+   $router 路由跳转 this.$router.push('/')
+   $route 获取参数 this.$route.params.id
+ 6.子路由配置
+   routes:[
+	{
+		path:'/login',
+                component:locom,
+                children:[
+                    {
+                        path:'/cart',
+                        component:cartcom
+                    },
+                    {
+                        path:'/person',
+                        component:personcom
+                    }
+                ]
+        }
+   ]
+2.动画
+  前提：切换效果(v-show,v-if)
+  步骤：
+   1.把切换的部分放入到transition标签之间
+   2.设置动画的样式
+     .v-enter,.v-leave-to{//准备进场和已经离场}
+     .v-enter-active,.v-leave-active{//准备离场和已经进场}
+3.Vue-resource 插件使用
+  1.引入文件
+  2.在要请求的位置
+    this.$http.get('请求URL').then((res)=>{//res就是请求的结果})
+  3.在PHP中设置允许跨域
+    header("Access-Control-Allow-Origin:*");
+4.Vue命令行使用(Vue-cli Vue脚手架)
+ 1.安装
+  1.进入tpls文件夹
+  2.按住shift，单击鼠标右键，进入命令行工具
+  3.cnpm install 安装依赖的node包
+  4.启动项目 npm start
+ 2.认识目录结构
+  src 项目目录
+   1.assets 用于存放一些调用的文件(css,js,img)
+   2.components 用于存放项目中的组件，文件后缀.vue
+   3.router 用于存放路由实例化，配置等
+   4.App.vue 根组件，所有的路由切换都是在这里执行
+   5.main.js 入口文件，项目启动的时候，从这开始
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+4.20
+1.Vue命令行中组件嵌套
+ 如果哪一个组件要被嵌套，需要在main.js引入，再注册为全局组件
+ 例：
+  import mytodobox from './components/mytodobox.vue'
+  Vue.component('todo-box',mytodobox);
+2.项目说明
+ 1.准备src目录，作为项目目录
+ 2.在components中创建组件
+ 3.在router/index.js进行路由配置
+ 4.css,font,img,js等静态资源，放入assets下
+ 5.清空根组件App.vue自带的图片和样式，因为会在所有组件中出现
+ 6.main.js 是入口文件，项目启动先运行它，后期需要的js,css，都是在这个文件中引入
+3.项目组件结构
+ 1.登录组件
+ 2.主页组件
+    1.图表组件
+    2.商品组件
+    3.用户组件
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+4.23
+1.传递多个参数
+  路由配置：
+   {path: '/orderDetail/:id/:sz',component: OrderDetail}
+  实际传递/orderDetail/1/10
+2.使用vue-resource
+ 1.引入插件
+   //引入vue-resource,直接从node-modules包里引入
+	import VueResource from 'vue-resource'
+ 2.在vue中声明使用
+   //使用vue-resource
+	Vue.use(VueResource);
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+4.24
+Vue中dom操作的修改
+  初始化的变量 var...作为data中数据
+  里边的方法，放入到methods中
+  其他的操作，放入到mounted钩子函数中
+Vue知识点回顾
+  Vue Vue-resource Vue-router
+  插值、指令、自定义指令、组件、过滤器、生命周期函数、watch、computed、组件间通信、路由

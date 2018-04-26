@@ -1,0 +1,332 @@
+2018/1/25
+1.URL
+  1.URL的作用
+    用于表示任意一个资源的位置（互联网上）
+    协议+主机名称（IP地址）+目录+文件名称
+  2.详解
+    格式<scheme>://<user>:<pwd>@<host>:<port>/<path>;<params>?<query>#<frag>
+    scheme:方案，协议，以哪种方式到服务器获取资源，协议不区分大小写，常见的协议：http/https/ftp,还有邮箱协议：SMTP(邮件传输)/POP3(邮件接收)
+    host:主机名，服务器的主机或IP地址或域名（由DNS转换为IP地址）
+    user：用户名，访问某些特定的服务资源时需要用到的信息，一般省略
+    pwd：密码，访问某些特定服务资源时用到的信息，一般省略
+    port：端口号，一般省略
+    path：路径，资源在服务器上存放的位置
+    params：参数
+    query：查询字符串，要传递给服务器的数据
+    frag:锚点，只在前端用
+2.Http协议
+  1.什么是HTTP
+    Hyper Text Transfer Protocol：超文本传输协议
+    规范了数据是如何打包以及传递的
+  2.详解
+    1.请求（request）消息
+      客户端要带给服务器的数据都有哪些，由三部分组成
+	1.请求的起始行
+	  1.请求方法
+	     GET：表示客户端向服务器获取资源时使用
+		特点：1.无请求主体
+		      2.靠地址栏传递查询字符串 		
+	     POST：表示想传递数据给服务器时使用
+	        特点：1.有请求主体
+	     PUT：表示客户端想放置文件到服务器
+	     DELETE：表示客户端想要删除服务器的数据
+	     HEAD：表示客户端只想获取指定的响应头
+	     CONNECET：测试连接
+	     TRACE:追踪请求路径
+	     OPTIONS:选项，保留以后使用
+	  2.请求URL
+	  3.协议版本：默认http/1.1
+	2.请求头
+	  1.Host:localhost（本地主机）
+	    作用：告诉服务器请求哪个主机（可以是虚拟主机）
+	  2.Connection：keep-alive
+	    作用：告诉服务器要进行持久连接
+	  3.User-Agent
+	    作用：告诉服务器自己（浏览器）类型
+	  4.Accept-Language：zh-CN
+	    作用：告诉服务器自己能接收的语言
+	  5.Accept-Encoding：
+	    作用：告诉服务器能接收的数据压缩类型是什么
+	  6.Refere：
+	    作用：告诉服务器请求来自哪个页面 
+	3.请求主体
+	  form data
+    2.响应（response）消息
+      服务器向客户端返回信息
+      1.响应起始行
+        1.协议版本号：HTTP/1.1
+	2.响应状态码
+	  作用：告诉浏览器，服务器响应状态是什么
+	  1XX:100-199，提示信息
+	  2XX:成功响应
+	  3XX：需要进行重定向
+	      301：永久重定向
+	      302：临时重定向
+	      304：NOT Modified 缓存未清理
+	  4XX：客户端请求错误
+	      404：Not Found请求资源不存在
+	      403：Forbidden权限不够
+	      405：Method NOT Allowed请求方式不允许
+	  5XX：服务器运行错误
+	      500：服务器内部错误
+	3.原因短句
+	  对状态码的简单解释
+      2.响应头
+        1.Date
+	  作用：告诉浏览器，服务器响应时间，是格林威治时间
+	2.Content-Type
+	  作用：响应主体的类型是什么，告诉浏览器，用什么方式解析响应主体
+	  1.text/html:响应回来的数据时HTML文本
+	  2.text/plain：响应回来的数据是普通文本
+	  3.text/css：响应回来的数据是css样式
+	  4.application/javascript：响应回来的数据是js脚本代码
+	  5.application/xml：响应回来的数据是xml格式的字符串
+	  6.application/json：响应回来的数据是json格式的字符串
+	  7.image/jpeg：响应回来的数据是图片
+      3.响应主体
+        response回来的主要内容
+  3.缓存
+    1.什么是缓存
+      客户端将服务器响应回来的数据进行自动保存，当再次访问时，直接使用保存的数据
+    2.缓存优点
+      1.可以减少冗余数据的传输，节省客户端流量
+      2.可以节省服务器带宽
+      3.降低对服务器资源的消耗和运行的要求
+      4.降低由于远距离而造成的延时加载问题
+    3.与缓存相关的消息头
+      1.Cache-Control消息头
+        作用：从服务器将文档传到客户端之时起，此文档处于新鲜的秒数
+	语法：Cache-Control：max-age=处于新鲜的秒数
+	ex：Cache-Control：max-age=0;  //每次都从服务器下载
+      2.Expires消息头
+        作用：指定缓存过期确切时间（格林威治时间）
+	语法：Expires:Sun, 04 Feb 2018 06:24:53 GMT 
+    4.在网页上设置消息头
+      增加消息头
+      html：
+        <meta http-equiv="消息头" content="值">
+3.DOM操作
+  1.完整的JavaScript由三部分组成
+    1.js核心:ECMAScript
+    2.DOM:Document Object Model
+      文档对象模型，让js动态的操作页面的元素
+    3.BOm:Browser Object Model
+      浏览器对象模型，让js动态的操作浏览器
+  2.使用js获取页面上的某个元素
+    1.为元素添加id属性
+      <div id="d1"></div>
+      <input type="text" id="uname">
+    2.在js中，允许通过元素的id来获取指定的元素
+      var elem=document.getElementById("元素id值");
+    3.获取/设置某元素的内容
+      <div id="d1">刘杰是端端爸爸</div>
+      DOM对象的一个属性：innerHTML 
+      表示的就是标签内的所有内容
+    4.获取/设置表单控件的数据
+      在DOM中，表单控件们，是通过DOM对象value属性来获取/设置值的
+      步骤：
+      1.通过id获取表单控件元素
+      2.通过DOM对象的value属性获取/设置控件的值
+    5.简化document.getElementById()
+      document.getElementById()的作用：
+      根据“指定的id值”获取对应的“HTML元素”
+      /*
+	参数id：要获取元素的id
+	返回值：获取的对应的HTML元素
+      */
+      function $(id){
+	return document.getElementById(id);
+      }
+4.HTML元素的事件
+  1.什么是事件
+    允许通过用户的行为来激发的操作就是事件
+    常用事件：onclick
+  2.其他事件
+    1.文本框和密码框-onblur
+      onblur事件：失去焦点时的事件
+    2.文本框和密码框-onfocus
+      onfocus事件：获取焦点时的事件
+  3.body的onload事件
+    当网页加载时要执行的操作
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+2018/1/26
+1.select的onchange事件
+  当选项框中的内容发生改变时要触发的事件
+2.AJAX
+  1.名词解释
+    1.同步
+      在一个任务进行中时，不能开启其他的任务
+      同步访问：浏览器在向服务器发送请求时，浏览器只能等待服务器的响应，不能做其他事情
+      出现场合：
+	1.地址栏输入网址访问网页
+	2.a标记的默认跳转
+	3.submit按钮的表单提交
+    2.异步
+      一个任务开启时，可以开启其他的任务
+      异步访问：浏览器在向服务器发送请求时，不耽误用户在网页做其他操作
+      使用场合：
+         1.用户名验证
+	 2.股票走势图
+	 3.聊天室
+	 4.搜索建议
+  2.AJAX
+    Asynchronous Javascript And Xml
+       异步的       js       和 Xml
+    本质：使用js提供的异步对象（XMLHttpRequest），异步的向服务器发送请求，并接收响应回来的数据
+  3.异步请求的步骤
+    1.创建AJAX（xhr异步）对象
+    2.绑定事件
+    3.打开连接
+    4.发送请求
+  4.创建异步对象
+    标准创建：var xhr=new XMLHttpRequest();
+    IE8以下：var xhr=new ActiveXObject("Microsoft.XMLHttp");
+    window.XMLHttpRequest来判断浏览器是否支持标准创建
+    如果浏览器不支持标准创建，那么window.XMLHttpRequest返回的值为NULL
+    if(window.XMLHttpRequest){
+	var xhr=new XMLHttpRequest();
+    }else{
+	var xhr=new ActiveXObject("Microsoft.XMLHttp");
+    }
+  5.绑定事件
+    异步对象xhr的常用属性和方法
+    1.readyState属性
+      作用：用于表示xhr对象的请求状态
+      值：0-4表示5个状态
+        0：请求状态尚未初始化
+	1：已经打开到服务器的链接，正在发送请求中
+	2：接收响应头
+	3：接收响应主体
+	4：接收响应数据成功
+	注意：当readyState的值为4的时候，才表示所有的响应都已经接收完毕
+    2.status属性
+      作用：表示的是服务器的响应状态码
+      值：200
+      当status的值为200时，表示服务器已经正确处理了请求以及给出相应
+    3.onreadystatechange - 事件
+      作用：当xhr的readyState属性值发生改变时，要自动激发的操作
+      语法：
+         xhr.onreadystatechange=function(){
+	   //判断xhr.readyState为4并且xhr.status为200，就可以获取“相应数据”了
+	   if(xhr.radyState==4&&xhr.status==200){
+		//接收响应回来的结果数据
+		var resText=xhr.responseText;
+		console.log(resText);
+	    }
+         }
+  6.创建连接
+    open() 
+    作用：打开连接（创建请求）
+    语法：xhr.open(method,url,isAsyn)
+      method:请求方式  值："get"/"post"
+      url:请求地址     
+      isAsyn:boolean类型   指定采用同步还是异步的方式发送请求 
+             false代表同步  true代表异步
+  7.发送请求
+    send()
+    语法：xhr.send(body)
+        body：请求主体
+	如果没有请求主体（也就是method="get"），body的位置处为NULL
+	如果有请求主体，则在body位置处放请求的主体数据
+  8.使用GET提交方式，发送请求数据数据（带参数）
+    在URL后面拼接内容
+  9.使用AJAX发送post请求
+    注意两点：
+       1.post的请求数据要放在请求主体中
+         xhr.send("uname=value1");
+       2.在发送请求之前，需要手动修改请求消息头
+         xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+2018/1/27
+1.JS对象的数据格式
+  1.js对象的数据格式
+    ex:
+      var Tom=[];      var Tom=[];
+      Tom[0]="Tom";    Tom["name"]="Tom";
+      Tom[1]="180cm";  Tom["height"]="180cm";
+      Tom[2]=20;       Tom["age"]=20;
+    js对象的语法结构：
+      var 对象名={     var Tom={
+	  属性:值,        name:"Tom",
+	  属性:值,        height:"180cm",
+	  属性:值,        age:20
+      }                }
+    取对象值的时候，(对象名.属性)就可以了
+  2.JSON格式
+    1.什么是JSON
+      JavaScript Object Notation
+      JS对象的表现方式，即以js对象的格式表现出来的字符串
+    2.JSON语法
+      1.JSON对象
+        1.用一对{}来表示一个对象
+	2.对象的属性名，必须用""引起来，值如果是字符串的话，也必须用""引出来
+	  ex:普通字符串： var tom="汤姆";
+	     JSON字符串： var tom='{"name":"汤姆"}';
+      2.JSON数组
+        普通数组：var arr=["金三胖","川普","习大大"];
+	JSON数组：var arr='[
+	{"name":"金三胖","height":170,age:40},
+	{"name":"川普","height":178,age:60},
+	{"name":"习大大","height":180,age:65}]';
+    3.在PHP中，可以直接将数组转换位JSON格式的字符串
+      语法：通过json_encode()将数组转换为json格式的字符串，并返回转换后的结果
+    4.将JSON字符串转换为js对象/数组
+      使用JSON.parse()来讲json字符串解析为js对象或数组
+      var obj=JSON.parse("接收回来的json字符串");
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+2018/1/29
+1.XML
+  AJAX:Asynchronous Javascript And Xml
+  1.什么是XML
+    eXtensible Markup Language
+      可扩展的  标记    语言
+    XML的标记没有被预定义过，需要自行定义。
+    XML的宗旨是做数据传递的，而非数据显示。
+  2.XML的语法规范
+    XML可以保存在.xml的文件中，也可以字符串的方式出现在其他的文件中。
+    1.XML的最顶端是XML的声明
+      <?xml version="1.0" encoding="utf-8"?>
+
+    2.XML标记的语法
+      1.XML标记必须成对出现
+        <student> 错误
+	<student></student> 正确
+      2.XML标记是严格区分大小写，开始和结束标记必须一致
+      3.XML的标记允许被嵌套，注意嵌套顺序
+        <student>
+	  <firstName></firstName>
+	  <lastName></lastName>
+	</student>
+      4.每个标记都允许定义属性，格式与HTML一致，但属性值，必须用""括起来。
+        <student num="10"></student>
+      5.每个xml文件中，必须要有一个根元素
+      练习：
+        在student.xml中，创建一对根元素<StudentList>
+	1.在<StudentList>中，新建一对<student>
+	2.在<student>中，分别用三对元素来表示学员的姓名，性别，年龄
+	3.创建3名学员的信息
+  3.使用AJAX请求xml文件
+    1.遵循AJAX的请求步骤
+      1.创建xhr
+      2.绑定事件
+        在绑定事件的回调函数中获取xml返回的数据，使用xhr.responseXML来获取响应回来的数据，返回的是xml文档对象。
+
+      3.打开连接
+        xhr.open("get","01-student.xml",true);
+      4.发送请求
+  4.解析XML文档对象的内容
+    1.核心方法
+      elem.getElementsByTagName("标记名");
+      elem:获取范围的对象
+      返回值：返回一个包含指定元素们的"类数组"
+  5.在PHP中返回XML格式的字符串
+    1.必须增加响应消息头
+      header("Content-Type:application/xml");
+    2.按照xml的语法结构，拼接xml字符串，再响应给客户端
+      $xml="<?xml version='1.0' encoding='utf-8'?>"
+      $xml.="<StudentList>";
+	...
+      $xml.="</StudentList>";
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+2018/1/30
+首条记录下标=（当前页数-1）*pageSize

@@ -1,0 +1,421 @@
+4.8
+面试题：用户在浏览器中输入www.taobao.com回车，直到看到了页面之间发生了什么？
+ 1.操作系统访问网络上DNS服务器，把域名转为IP地址
+ 2.浏览器通过IP向淘宝服务器发送HTTP请求
+ 3.淘宝web服务器接收到请求并解析请求消息，查找指定资源，可能访问数据库，构建并返回HTTP响应消息
+ 4.浏览器接受并解析响应消息
+ 5.浏览器缓存接收到的响应消息，并解析渲染内容
+静态网和动态网页
+ 静态：网页内容任何人在任何时间访问都是不变的
+	HTML/CSS/JS/Flash/视频/音频...
+ 动态：网页内容不同人在不同时间访问可能是不同:JSP/ASP/PHP/NODE.JS
+     JSP：    HTML+java 功能强大可靠适用性强适合大型项目
+     ASP.NET：易用，适合Windows平台，但是价格昂贵
+     PHP：    简单易用，适合互联网项目
+     NODE.JS：HTML+JS 性能好，适合服务器IO密集型项目，不适合CPU密集型项目
+      IO密集型：大部分项目，主要功能查询/修改
+      CPU密集型：滴滴打车，天气预报，适合c语言，Java
+Node.js
+ 概述：不是前端的js，是一种服务器端的开发平台，竞争对手JSP/ASP/PHP，历史上一次有一种语言通吃前后端
+ 下载：官网www.nodejs.org，也可以去淘宝镜像下载
+	Windows版本 node-v8.10.0-x64.msi  
+	Mac版本     node-v8.10.0.pkg  
+	注意事项：版本区别Current[最新版]和LTS[长期稳定版]，安装成功后，检测cmd输入node-v
+ 运行模式：
+  1.交互模式：一般用于测试
+   REPL:输入一行代码执行一行代码
+    注意：交互模式自带输出功能，node+回车
+  2.脚本模式：正式项目
+   把要执行的所有语句编写一个文本文件中（后缀名任意，没有也行），一次性提交node解释器执行
+   node 完整路径 回车
+   提示：只要安装完成node.js，重启动webstorm，ws可以自动发现node.js项目代码一定要时utf-8
+ 面试题：如何自学一门语言--node.js
+  1.背景
+    百度百科：事件驱动，非阻塞I/O 模型
+  2.搭建开发环境，编写 HelloWorld
+    下载，安装
+  3.数据类型
+   前端类型：
+    1.基本（原生、值）类型：
+      string/number/booolean/undefined/null
+    2.引用（对象）类型
+     ES 对象：Math/RegExp/Data/Object/Function
+     BOM对象：Windows/document/lacation/screen/hidtory
+     DOM对象：Node/Element/Attr...
+     自定义对象：{}
+   后端node.js类型
+    1.基本（原生、值）类型：
+      string/number/booolean/undefined/null
+    2.引用（对象）类型
+     ES 对象：Math/RegExp/Data/Object/Function
+     自定义对象：{}
+     node.js提供了第三方对象库
+  4.变量和常量
+   var const
+  5.运算符
+   算术运算符
+   逻辑运算符
+   比较运算符
+   位运算符
+   三目运算符
+   赋值运算符
+   特殊运算符：. instanceof typeof
+  6.逻辑结构
+   循环结构:while do..while for for(in) for(of)
+   选择结构:if..else switch..case
+  7.通用小程序
+   99乘法表，100以内质数..
+  8.函数和对象
+  9.常用组件，第三方工具
+  10.实际小项目
+ Modal:模态框：alert
+ Model:模型
+ Moule:模块，node.js特有
+  node.js按照功能的不同可以把函数，对像分别处于不同文件和目录下，这些文件或目录称为"Module"
+  node.js中每个模块都是一个独立函数，解析器会为每个.js文件添加如下代码(自动)
+   (function(exports,require,module,__filename,__dirname){
+	exports：{}用于声明向外导出自己的成员
+	require:fn用于导入其他的模块，创建指定模块对象
+	module:当前代码模块对象
+	__filename：当前模块绝对路径
+	__dirname：当前模块所属目录绝对路径
+	//自己的代码
+   })
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+4.9
+面试题:node.js中exports和module.exports对象区别是什么？
+ 二者都可以用于向外界导出自己内部成员，但是module变量指代当前模块对象：真正导出对象，exports只是module.exports的一个引用
+ node.js的底层代码：exports=module.exports
+ 所以，若只是给exports对象添加新的成员导出，则等价于module.exports添加新成员导出，但是若修改exports指向，则不会产生实质的作用
+ 示例：
+  exports.age=10;导出成员等同module.exports.age=10
+  exports={age:10}; exports失效了，但是module.exports={age:10}可以导出
+node.js 自定义模块分类
+ 1.文件模块
+  创建一个.js文件，导出需要公开数据，其他的模块只需要var m=require(".js")引用
+ 2.目录模块
+  方式1：创建目录，假设名为m1,其中创建index.js文件向外导出数据，其他模块引用require("./m1")
+  方式2：创建目录，假设名为m2,其中创建package.json,其中main指定启动.js文件，如2.js,创建2.js并导出数据，其他模块引用require("./m2")
+  方式3：创建一个目录，必须名为node_modules，其中再创建一个目录模块，假设m6,其中创建package.json文件，其中声明main属性指定默认执行的js文件，如6.js其中导出需要公共数据
+   其他模块引用：var m=require("m6");
+   目录结构
+    node_modules
+     m6
+      package.json ["main":"./xx.js"]
+      xx.js
+    app.js   //引用
+  文件模块的优先级高于目录模块
+node.js NPM包管理器
+ NPM：node.js的第三方模块，包管理器工具，下载，更新，删除，维护包依赖关系的工具
+ npm工具默认会到官方网站下载模块：去www.npmjs.org 查询模块名称 
+ 下载第三方模块：npm install 模块名称
+ 删除第三方模块：npm uninstall 模块名称
+node.js 内置模块--querystring
+ querystring模块用于处理HTTP请求url中查询字符串
+ ?pno=3&pageSize=8
+ var obj=qs.parse(str);     #把查询字符串解析为js对象
+ var str=qs.stringify(obj); #把js对象解析查询字符串
+node.js 内置模块--url
+ url模块用于解析一个HTTP请求地址，获取其中各个不同部分
+ var obj=url.parse(str);      #把url解析为一个对象
+ var str=url.parse(str,true); #把url解析为一个对象，包括查询字符串
+node.js 内置模块--buffer
+ buffer：缓冲区（提高效率），本质是一块内容区域，用于暂存以后要用到的数据，该区域就称为“缓存”
+ 分配一个指定大小缓冲区
+  var buf=Buffer.alloc(1024);  //字节
+ 使用数组创建缓冲区
+  var buf=Buffer.from([1,2,3]);
+ 使用字符串创建缓冲区
+  var buf=Buffer.from("abs");
+ 把缓冲区数据转换字符串
+  var str=buf.toString();
+node.js 内置模块--fs
+ fs模块提供了对文件系统中的文件/目录增删改查，读写功能
+ 1.同步（阻塞）
+   var data=fs.readFileSync(fileName);   //读取文件内容
+   fs.writeFileSync(fileName,str/buf);   //写数据到文件，会先删除原有内容
+   fs.appendFileSync(fileName,str/buf);  //追加数据到文件，不删除原有内容
+ 2.异步（非阻塞）
+   fs.readFile(fileName,(err,data)=>{});  //读取文件内容
+    (err,data)=>{} 当文件读取结束后自动调用函数
+    data 被读取的文件内容
+   fs.writeFile(fileName,str/buf,(err)=>{});   //写数据到文件
+    (err)=>{} 写数据结束自动调用此函数
+ 注意：阻塞和非阻塞是程序工作方式
+  阻塞工作：两个程序完成一个任务一定是一个等待，另一个在工作
+  非阻塞工作：两个程序完成一个任务一定是一个工作，另一个也在工作
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+4.10
+node.js 内置模块(fs/http)
+  Http模块可用于编写一个基于HTTP协议客户端程序(即浏览器),
+  也可以编写一个基于HTTP协议的服务器端的程序(apache)
+  用HTTP协议编写一个web服务器
+   (1)接收客户端的HTTP请求消息
+   (2)解析客户端请求消息
+   (3)读取客户端请求的文件
+   (4)向客户端发送HTTP响应消息，主体就是客户端请求的文件
+   const http = require("http");
+   var server = http.createServer();
+   server.listen(3000);
+   //[1-65535]----1024以上
+   server.on("request",(req,res)=>{
+     req对象:客户请求消息
+     res对象:服务器响应对象
+     解析客户请示消息
+     向客户端输出响应消息
+   })
+   
+  练习:创建动态WEB服务器，接收客户请求,若客户端请求
+        /register.html 读取该文件并且向客户端返回
+        <form action="register.do">
+         <input name=uname>
+         <input name=upwd>
+         <input value=注册>
+        </form>
+        若客户端请求url /register.do 则解析请求查询字符串
+        把客户端提交uname,upwd 追加 public/user.log文件中
+        并向客户端输出"注册成功"
+  
+
+  
+  经典错误: listen EADDRINUSE :::3000
+  3000端口己经被占用!
+  
+node.js 模块-第三方模块(mysql/express--重点)
+  SQL语句分类
+  DDL:(Data Define Language)     定义数据
+      CREATE/DROP/ALTER
+  DML:(Data Manipulate Language)操作数据行
+      INSERT/DELETE/UPDATE
+  DCL:(Data Control Language)    控制语句
+      GRANT/REVOKE
+  DQL:(Data Query Language)    查询
+      SELECT 
+Node.JS 访问mysql数据库
+   为了精简Node.js解释器,官方没有提供访问任何数据库相关的模块，必须使名用npm工具下载第三方模块.
+   使用npm 下载mysql模块
+   cnpm i mysql
+   mysql模块使用的步骤
+   (1)加载相应的模块
+     const mysql = require("mysql");
+   (2)创建数据库的连接
+     var conn = mysql.createConnection({...})
+   (3)发送sql语句
+     conn.query("select...",(err,result)=>{
+        result结果对象
+        (4)关闭连接
+        conn.end();
+     })
+ 
+ #数据库中常见安全漏洞:sql注入
+ 利用特殊字符 # ' or 1=1 DROP select info完成对数据入侵操作
+ #node.js 解决方案
+ #sql占位符
+  SELECT aid FROM xz_admin WHERE aname = ? AND apwd = md5(?)
+  conn.query(sql,["tom","123"]);
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+4.11
+node.js 模块-第三方模块(mysql/express--重点)--连接池
+ 池：提高效率
+  原因：系统启动时创建一组连接，保存在池中，如果需要连接，则从池中获取使用，使用完成归还即可，
+	大大减少连接与关闭连接所需时间 
+ 占位符：调高安全级别
+ 如何使用：
+  1.加载mysql模块
+   const mysql=require("mysql")
+  2.创建连接池
+   var pool=musql.createPool({...conectionLimit:5})
+  3.从连接池中获取一个连接
+   pool.getConnection((err,conn)=>{
+	4.创建一个SQL语句并且发送SQL语句
+	var sql="";
+	conn.query(sql,,(err,result=>{
+	   5.归还连接
+	   conn.release();
+	}))
+   })
+node.js 模块-第三方模块 express
+ 使用官方提供HTTP模块可以创建一个web服务器应用，但是此模块太底层，要处理各种情景，比较繁琐，
+ 推介使用HTTP模块简化版：express 是基于http模块而编写的高层模块，简化web服务器的开发
+ 使用方法：下载：cnpm i express
+  1.加载express模块，依赖http
+   const http=require("http");
+   const express=require("express");
+  2.创建express对象
+   var app=express();
+  3.创建服务对象并且绑定监听
+   var server=http.createServer(app);
+   server.listen(3000);
+  4.接收不同客户请求
+   app.get(url,(req,res)=>{});    
+   app.post(url,(req,res)=>{});
+   app.delete(url,(req,res)=>{});
+   app.put(url,(req,res)=>{});
+  请求方法：用于标明此次请示的目的
+   GET	  表示客户端想“获得”指定资源
+   POST   表示客户端想“上传、添加”数据给服务器，数据在请求主体中
+   PUT    表示客户端想“上传、更新”服务器上指定资源
+   DELETE 表示客户端想“删除”服务器上指定资源
+  浏览器如何发起GET请求
+  浏览器如何发起POST请求：  表单 POST，ajax-post
+  浏览器如何发起PUT请求：   ajax-PUT
+  浏览器如何发起DELETE请求：ajax-DELETE
+  使用express接收不同客户请求
+   express路由（Router）=Method+Path+Fn
+   app.get(url,(req,res)=>{
+      res.send("向客户端返回HTML字符串")
+      res.sendFile(__dirname+"/向客户端输出指定文件内容")
+      res.json(obj);将obj转换json字符串
+   }); 
+   接收GET请求中查询字符串
+    #GET/user?uid=10&loc=ts
+     app.get("/user",(req,res)=>{
+      #express为每req对象添加属性query
+      console.log(req.query.uid);
+      console.log(req.query.loc);
+     })
+    #GET/user/20/bj
+     app.get("/user/:uid/:loc",(req,res)=>{
+      #express为每req对象添加属性params
+      console.log(req.params.uid);
+      console.log(req.params.loc);
+     })
+   接收POST请求中查询字符串
+    app.post(url,(req,res)=>{});
+    提示：客户端推荐AJAX异步请求，提交POST数据
+    app.post("/user3",(req,res)=>{
+     #接收请求主体中数据
+     #data事件触发条件，客户端数据上传结束 buf 客户数据
+     req.on("data",(buf)=>{
+      var obj=qs.parse(buf.toString());
+     })
+    });
+   app.delete(url,(req,res)=>{});
+    app.delete("/user3",(req,res)=>{
+     #接收请求主体中数据
+     #data事件触发条件，客户端数据上传结束 buf 客户数据
+     req.on("data",(buf)=>{
+      var obj=qs.parse(buf.toString());
+     })
+    });
+   app.put(url,(req,res)=>{});
+    app.put("/user3",(req,res)=>{
+     #接收请求主体中数据
+     #data事件触发条件，客户端数据上传结束 buf 客户数据
+     req.on("data",(buf)=>{
+      var obj=qs.parse(buf.toString());
+     })
+    });
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+4.12
+node.js 模块-第三方模块 express--中间件
+ express是一个自身功能极简，完全是由路由和中间件构成web开发框架
+ 中间件：是一个函数，他可以访问对象（req）,响应对象（res）
+ 控制程序流程.next控制程序流程
+ 中间件的功能包括
+  执行任何代码
+  修改请求和响应的
+  终结请求
+  调用下一个中间件
+ 中间件分类
+  应用级中间件
+  路由级中间件
+  错误处理中间件
+  内置中间件
+  第三方中间件
+ 如何开发
+  app.use(url,(req,res,next)=>{
+    url:激活此中间件路径
+    //...
+    next():调用下一个中间件或者程序
+  })
+ express 4.0官方提供的中间件函数
+  app.use(express.static("静态目录"))；
+  若客户请求“静态目录”下的某个资源，他可以直接向客户端返回，不会再调用后续路由
+ 路由级中间件
+  产品/用户/订单
+  /list
+  /del
+  /update
+  /search
+  示例：产品模块
+   1.创建文件：保存所有产品信息   product.js
+   2.product.js 创建一个对象路由对象
+    var router=express.Router();
+   3.处理各种请求
+    router.get("/list")
+    router.get("/del")
+    router.get("/update")
+    router.get("/search")
+   4.product.js 将路由对象导出
+    module.exports=router;
+   5.app.js
+    var routerProduct=require("./product");
+    app.use("/product",routerProduct);
+   访问产品对象列表
+    http://127.0.0.1:3000/product/list
+工具 webpack[vue/ng/prect/...公司需要]
+ webpack 打包处理工具(gulp)
+ webpack 一款处理加载打包工具，能把各种资源(js/jsx/less/sass/css/图片),最后打包到一个或多个文件中
+ 安装和配置
+ 全局安装webpack
+ cnpm install webpack@3.3.0 -g
+ 在本地项目中再安装一次
+ cnpm install webpack@3.3.0 --save-dev
+ 案例一：使用webpack打包一个js文件
+  01/test.js 打包 test.bundle.js
+  打包语法 webpack 源文件    目标文件
+  打包命令 webpack test.js test.bundle.js
+  index.html 引用 test.bundle.js
+ 案例二：使用webpack 打包一个文件[引其他js]
+  02/test.js word.js
+  打包命令 webpack test.js bundle.js
+ 案例三：使用webpack配置文件
+  webpack.config.js
+  module.exports={
+    entry:"./test.js",  //入口文件
+    output:{
+      filename:"bundle.js"  //输出文件
+    }
+  }
+  打包命令 webpack
+ 案例四：使用webpack打包多个文件
+  main1.js bundle1.js
+  main2.js bundle2.js
+  webpack.config.js
+  module.exports={
+	entry:{
+	  bundle1:'./main1.js',
+	  bundle2:'./main2.js'
+	},
+	output:{
+	  filename:'[name].js'
+	}
+  }
+  打包命令 webpack
+ 案例五：使用webpack打包多个文件--添加参数
+  webpack --progress         打包时显示进度条
+  webpack --display-modules  打包时显示加载模块
+  webpack --watch            监听代码改动并且自动打包
+ 案例六：使用package.json打包文件
+  1.生成package.json
+   cnpm init
+  2.添加代码运行package.json 打包
+   "scripts":{
+      "test"....,
+      "dex":"webpack --config webpack.config.js --colors --progress"
+   }
+  3.运行
+   npm ren dex
+ 案例七：使用css打包程序
+  1.单独安装css和style加载器
+   cnpm install css-loader style-loader --save-dev
+  2.创建css
+   index.css index.html
+  3.创建 test.js bundle.js
+  4.修改配置 webpack.config.js
+ 案例八：使用img打包程序
+  1.单独安装url加载器
+   cnpm install url-loader file-loader --save-dev
+  2.修改配置 webpack.config.js
+  3.打包 webpack

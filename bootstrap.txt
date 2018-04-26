@@ -1,0 +1,420 @@
+3.29
+bootstrap：
+ 响应式网页
+  什么是：
+   1G：智能通话
+   2G：能通话，短信
+   2.5G：通话，短信，上网--WML
+   3G：IOS/Android[Linux] 通话，短信，上网--HTML
+   Responsive Web Page：响应式网页/自适应网页，2010年，一个网页，会自动根据用户浏览设备不同，自动改变布局，可以被PC/PAD/PHONE正常浏览
+  如何编写：
+   1.声明 viewport(视口) 元标签
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    早期3G手机为浏览大尺寸的页面，只能强行把页面缩小，导致，图片，文字，超链接很少
+    IOS提出了“视口”，视口用于盛放网页内容，尺寸可以指定，超过部分滑动网页解决
+   2.使用流式布局
+    实现方式：float:left;display:inline-block
+   3.所有容器，文字，图片，使用相对尺寸，不用绝对尺寸
+    .container{
+      //width:500px;   //绝对的，不用
+      width:100%;
+      //font-size=12px;
+      font-size:2em;
+    }
+   4.使用CSS3 Media Query技术（最重要原则）
+    Media：指浏览网页设备：screen(pc/pad/phone),print,tv
+    Media Query:查询出当前浏览网页的设备类型，以及特性（解析度，对比度，尺寸，手持方向等），不同，而选择性执行某些CSS代码，而忽略另外一些
+    媒体查询的两种实现方法
+     1.根据媒体查询结果执行不同外部CSS文件
+      <link media="screen and (min-width:768px) and (max-width:991px)" rel="stylesheet" href="css/pad.css">
+     2.根据媒体查询结果执行不同css片段（使用频繁）
+      pc宽度 >992
+      pad宽度 >768 <991
+      phone宽度 <767
+      @media screen and (min-width:768px) and (max-width:991px){
+	//pad的代码
+      }
+ bootstrap:引导程序 css/js框架支持响应式布局
+  官网：http://www.bootcss.com
+  bootstrap是一个HTML；css；JS框架，用于开发响应式布局，移动设备优先的web项目
+  内容分为五个部分
+   1.起步
+    下载：dist[css/fonts/js]
+    基本模板：
+     1.<html lang="zh-CN">
+      language:指定当前网页所用自然语言，如 zh-CN,zh-HK
+      作用两个：1.为浏览器的翻译软件确定基础语言
+	        2.为读屏软件确定基础发音
+     2.<meta name="viewport" content="width=device-width,initial-scale=1">
+     3.<meta http-equiv="X-UA-Compatible" content="IE=edge">
+       扩展HTTP响应头部消息
+       IE=edge 告诉IE浏览器使用最新引擎渲染网页
+       //仅IE浏览器识别
+     4.html5shiv.js
+       第三方编写js文件，是一个自调函数，让老IE兼容HTML5标签
+     5.respond.js
+       第三方编写js文件，是一个自调函数，让老IE支持响应式网页--CSS3 Media Query
+   2.全局css样式（栅格系统）
+   3.组件
+   4.JS插件
+   5.定制（less）
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+3.30
+bootstrap 全局css样式（栅格系统）
+ bootstrap 全局css样式--按钮
+  .btn          按钮基础样式
+  .btn-default  白底黑字的按钮
+  .btn-danger/warning/success/info/primary 五种颜色
+  .btn-lg/sm/xs 按钮四种大小
+  .btn-block    块级按钮
+ bootstrap 全局css样式--图片
+  .img-rounded    圆角图片
+  .img-circle     圆形图片
+  .img-thumbnail  缩略图
+  .img-responsive 响应式图片
+   如果元素：width:100%，会随着屏幕放大，变大，max-width：100%图片随着屏幕放大，变大，但不会超过原始大小
+ bootstrap 全局css样式--文本
+  .text-danger/warning/success/info/primary 文本颜色
+  .bg-danger/warning/success/info/primary   背景颜色
+  .text-left/center/right/justify           文本对齐方式
+  .text-uppercase/lowercase/capitalize      转换大小写
+ bootstrap 全局css样式--列表
+  .list-unstyle    去除提示符号
+  .list-inline     行内列表
+ bootstrap 中屏幕分类
+  1.大型pc屏幕    lg w>=1200
+  2.中等pc屏幕    md 1200>w>992
+  3.小型pad屏幕   sm 992>w>768
+  4.超小phone屏幕 xs 768>w
+ bootstrap 全局css样式--表格
+  .table
+  .table-border     带边框表格
+  .table-striped    隔行变色
+  .table-hover      带悬停隔行变色
+  .table-responsive 响应式表格 必须用 TABLE的父元素DIV
+ bootstrap 全局css样式--栅格
+  1.TABLE 布局
+   优点：简单易控制
+   不足：语义错误，页面渲染效率低
+  2.DIV/CSS 布局
+   优点：语义正确，页面渲染效率快
+   不足：不容易控制
+  3.Bootstrap 的栅格系统布局
+   优点：简单易控制，语义正确，页面渲染效率快，支持响应式
+   不足：页面过于复杂
+   使用方法：
+    1.最外层必须使用容器
+     div.container或div.container-fluid
+    2.容器可以放置任何内容，若想使用栅格系统，必须用div.row
+     div.cintainer>dic.row
+    3.一个row中不能放置其他内容，只能放置.col，列中放置任何内容
+     div.cintainer>dic.row>div.col
+    4.Bootstrap中行的默认均分12等分，每个列必须指定在行内占比
+     12=[6-6]=[4-4-4]
+    5.栅格系统针对不同的屏幕提供不同列
+     .col-lg-1/...
+     .col-md-1/...
+     .col-sm-1/...
+     .col-xs-1/...
+    6.可以使用“列偏移”实现指定列及其后的列向右偏移的效果
+     .col-lg-offset-1/...
+     .col-md-offset-1/...
+     .col-sm-offset-1/...
+     .col-xs-offset-1/...
+    7.需要注意不同屏幕下列的适用性
+     .col-xs-* 适用xs/sm/md/lg 屏幕
+     .col-sm-* 适用sm/md/lg 屏幕
+     .col-md-* 适用md/lg 屏幕
+     .col-lg-* 适用lg 屏幕
+     列宽对于当前屏幕以更大屏幕都有效，列偏移一样
+    8.一个列可以指定在不同屏幕下宽度占比
+     div.col-xs-12/col-sm-9/col-md-6
+     div.col-xs-12/col-md-6
+     坑：div.col-xs-6 冲突 div.col-sm-6 错
+    9.一列可以指定在特定屏幕下隐藏
+     .hidden-xs  仅在xs屏幕下隐藏
+     .hidden-sm  仅在sm屏幕下隐藏
+     .hidden-md  仅在md屏幕下隐藏
+     .hidden-lg  仅在lg屏幕下隐藏
+    10.栅格系统可以嵌套，规则：在列中在嵌套行，行中再有列
+    .container>
+        .row>
+	  .col-*-*>
+	         .row>
+		   .col-*-*>
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+4.2
+Bootstrap 全局样式--表单
+ 1.默认表单
+  <form>
+   <div class="form-group">
+    <label class="control-label" for=""></label>
+    <input class="form-control">
+    <span class="help-block"></span>
+   </div>
+  </form>
+ 2.行内表单
+  <form class="form-inline">
+   <div class="form-group">
+    <label class="sr-only" for=""></label>
+    <input class="form-control">
+   </div>
+  </form>
+ 3.水平表单
+  水平表单=表单+栅格系统（变种）
+  默认栅格系统和水平表单栅格系统的不同
+  最外层元素：栅格：div.container 表单：form.form-horizontal
+  行：栅格：div.row 表单：div.form-group
+  列：栅格：div.col-*-* 表单：div.col-*-*
+  <form class="form-horizontal">
+   <div class="form-group">
+    <div class="col-*-*">
+     <label class="sr-only"></label>
+    </div>
+    <div class="col-*-*">
+     <input class="form-control">
+    </div>
+   </div>
+  </form>
+Bootstrap 组件--下拉菜单(class+js)
+ 下拉菜单必须三级结构
+  <div class="dropdown">  父元素
+   <a data-toggle="dropdown">触发元素</a>
+   <ul/div class="dropdown-menu">隐藏元素</ul/div>
+  </div>
+Bootstrap 组件--导航
+ 1.标签页式的导航--页面组件
+  <ul class="nav nav-tabs">
+   <li><a data-toggle="tab">十元套餐</a></li>
+   <li class="active"><a data-toggle="tab">二十元套餐</a></li>
+   <li><a data-toggle="tab">三十元套餐</a></li>
+  </ul>
+ 2.胶囊式导航
+  <ul class="nav nav-pills">
+   <li><a data-toggle="tab">十元套餐</a></li>
+   <li class="active"><a data-toggle="tab">二十元套餐</a></li>
+   <li><a data-toggle="tab">三十元套餐</a></li>
+  </ul>
+Bootstrap 组件--图标字体
+ web 项目中常用的图标字体
+  1.FontAwesome--675个免费的图标
+  2.Glyphicons--800个收费的图标
+ 服务器字体的使用方法
+  1.web服务器项目目录下必须有字体文件夹（fonts）
+  2.CSS中声明一个新字体，并指定字体下载位置
+   @font-face{
+    font-family:"Glyphicons Halflings",
+    src:"../fonts/glyphicons-halflings-regular.eot"
+   }
+  3.声明一个基础class，使用该字体
+   .glyphicon{
+    font-family:"Glyphicons Halflings"
+   }
+  4.在HTML中输出图标对应Unicode
+   .glyphicon-minus:before {
+    content: "\2212";
+   }
+  5.对于页面开发者，图标字体最后使用
+   <span class="glyphicon glyphicon-minus"></span>
+Bootstrap 组件--进度条(h5不用 boot将就用 canvas最好看的)
+ .progress>.progress-bar
+Bootstrap 组件--警告框
+ <div class="alert alert-四种颜色">
+  <span class="close" data-dismiss="alert">X</span>
+  <p>....</p>
+ </div>
+Bootstrap 组件--面包屑导航
+ <div class="row">
+   <div class="span6">
+       <ul class="breadcrumb">
+          <li>
+            <a href="#">四川省</a> <span class="divider">></span>
+          </li>
+          <li>
+            <a href="#">成都市</a> <span class="divider">></span>
+          </li>
+          <li class="active">青羊区</li>
+      </ul>
+   </div>
+ </div>
+Bootstrap 组件--分页条
+ <ul class="pagination">
+  <li><a>上一页</a></li>
+  <li><a>1</a></li>
+  <li><a>2</a></li>
+  <li><a>下一页</a></li>
+ </ul>
+Bootstrap 组件--徽章
+ <ul>
+  <li><a>收件箱</a><span class="badge">123</span></li>
+  <li><a>发件箱</a><span class="badge">13</span></li>
+ </ul>
+Bootstrap 组件--巨幕
+ <div class="jumbotron">
+ </div>
+Bootstrap 组件--水井
+ <div class="well"></div>
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+4.3
+Bootstrap 组件--缩略图
+ <div class="thumbnail">
+  <img src="">
+  <div class="caption"></div>
+ </div>
+ 注意：缩略图本身是一个block组件，需要配合栅格系统
+Bootstrap 组件--媒体对象
+ 左中/中右/左中右/横向三个部分展示一个商品/帖子数据
+ <div class="media">
+  <div class="media-left"></div>
+  <div class="media-body"></div>
+  <div class="media-right"></div>
+ </div>
+Bootstrap 组件--面板
+ 以中，上中，上中下纵向三个部分来展示数据
+ <div class="panel panel-颜色">
+  <div class="panel-heading"></div>
+  <div class="panel-body"></div>
+  <div class="panel-footer"></div>
+ </div>
+Bootstrap-- jquery 插件
+ Bootstrap基于jquery提供十几种插件函数，调用方式两种
+  1.JS编码方法
+   $(".dropdown>a").dropdown();
+  2.data扩展方法
+   <a data-toggle="dropdown"></a>
+Bootstrap-- jquery 插件--折叠（collapse）
+ 第一种a:
+  <a href="my-target"data-toggle="collapse">展开/收起</a>
+  <div id="my-target" class="collapse in">隐藏内容</div>
+ 第二种button
+  <button data-target="my-target"data-toggle="collapse">展开/收起</button>
+  <div id="my-target" class="collapse in">隐藏内容</div>
+Bootstrap-- jquery 插件--手风琴（according）
+  <div class="container">
+        <h1>插件--手风琴</h1>
+        <div class="panel-group" id="prgroup">
+            <div class="panel panel-danger">
+                <div class="panel-heading">
+                    <a href="#d1" data-toggle="collapse" data-parent="#prgroup">射雕三部曲</a>
+                </div>
+                <div id="d1" class="collapse in panel-collapse">
+                    <div class="panel-body">
+                        <p>《射雕英雄传》</p>
+                        <p>《神雕侠侣》</p>
+                        <p>《倚天屠龙记》</p>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <a href="#d2" data-toggle="collapse" data-parent="#prgroup">金庸书籍</a>
+                </div>
+                <div id="d2" class="collapse panel-collapse">
+                    <div class="panel-body">
+                        《鹿鼎记》<br>
+                        《天龙八部》<br>
+                        《笑傲江湖》<br>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <a href="#d3" data-toggle="collapse" data-parent="#prgroup">金庸书籍</a>
+                </div>
+                <div id="d3" class="collapse panel-collapse">
+                    <div class="panel-body">
+                        《雪山飞狐》<br>
+                        《飞狐外传》<br>
+                        《白马啸西风》<br>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+Bootstrap 组件--导航条(复杂)
+ .navbar-toggle的媒体查询：屏幕宽度大于768，隐藏
+ .navbar-collapse的媒体查询：屏幕宽度大于768，绝对定位.navbar-head内；否则就定位在.navbar-head下方
+ 导航条颜色
+  浅色底深色字：.navbar-default
+  深色底浅色子：.navbar-inverse
+ 导航条定位方式
+  相对定位：默认
+  固定定位：.navbar-fixed-*
+ 导航条位置
+  顶部：.navbar-fixed-top
+  底部：.navbar-fixed-bottom
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+4.4
+Bootstrap-- jquery 插件--图片轮播
+ <div class="carousel" data-ride="carousel">
+  <div class="carousel-inner">
+   <div class="item active">
+    img+.carousel-caption
+   </div>
+  </div>
+ </div>
+Bootstrap--定制--Less
+ 1.静态样式语言
+  CSS 可以直接被浏览器所解析，但作为一门语言，CSS并不完整，缺少编程语言必须的概念：
+   数据类型，变量，运算符，函数，继承，导致样式的可维护性差
+ 2.动态样式语言
+  三种：Sass/SCSS/Stylus/Less 在CSS的基础上添加动态编程语言，如数据类型，变量，运算符，函数，继承，提高样式可维护性
+  需要注意：浏览器只能识别CSS，所有的动态样式语言代码必须转换CSS，该过程称为“编译(Compile)”
+ 下载：http://lesscss.cn
+ Less是一门css预处理语言，它扩展css语言，增加变量/函数，使css更易于维护
+ 使用方法：
+  1.在客户端用Less--学习阶段使用
+   1.编写 x.less
+   2.在HTML中引入x.less文件，同时再引用less编译程序 less.js
+   3.客户请求HTML，下载x.less文件以及less,js编译程序
+   4.客户端运行js文件x.less编译css
+   会减慢客户端样式的呈现速度
+  2.在服务器用Less--必须掌握
+   1.下载安装独立JS解释器--Node.JS
+    在命令行中执行node-v可以看版本信息
+   2.下载less编译程序--less.js
+    npm install less [安装less编译程序]
+   3.启动js解释器，执行less编译器，指定x.less编译x.css
+    lessc x.less>x.css
+   4.less 语法学习
+    1.less支持所有css的语法
+    2.less支持多行注释和单行注释，但只有多行注释会编译到css--推介单行注释
+    3.less支持变量，变量的值可以取值为任何合法样式值
+     1.定义：@变量名:值；
+     2.使用：color:@变量名
+    4.less支持变量和常量的运算符
+    5.less支持在一个选择器“混入”另一个选择器样式
+     选择器1{...}
+     选择器2{...选择器1...}
+    6.less在样式混入可以指参数
+     选择器1(@参数,@参数){}
+     选择器2{...选择器1(值1,值2)}
+    7.less支持样式嵌套
+     选择器1{
+	...
+	选择器2{}
+     }
+     上述代码会被编译为
+     选择器1{}
+     选择器1 选择器2{}
+    8.less提供了几十个样式函数
+     ceil()
+     floor()
+     percentage(num) 把小数转换为百分比形式
+     darken(color,percentage) 把指定的颜色变暗
+     lighten(color,percentage) 把指定的颜色变亮
+     img-width(url);     返回指定图片的宽度
+     img-height(url);     返回指定图片的高度
+    9.less中可以使用@import实现文件包含，可以把一个大项目中的css样式保存在不同的源文件中，有利于实现分工协作
+     x.less
+     9.less
+     @import "x.less";
+     @import "x";  //省略后缀
+   5.通过修改bootstrap中less源文件实现定制
+    目的：
+     1.瘦身：删除不要样式
+      只需要注释掉bootstrap.less不需要@import
+     2.粗粒度定制
+      只要修改variable.less中定义变量
+     3.细粒度定制
+      修改对应.less文件

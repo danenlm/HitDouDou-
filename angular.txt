@@ -1,0 +1,186 @@
+4.24
+设计模式
+  设计目标：提高软件的可维护性和可扩展性
+  封装就是设计模式中的一个概念
+  采用OOP的设计思想
+  采用的设计模式
+     MVVM model view viewmodel  基于某一个组件
+     MVC model view controller(控制器)  基于整个项目
+1.angular
+ 1.是什么
+   是由Google和开源社区共同维护的一个框架
+ 2.用于哪
+   用于以数据交互为主的大型应用（SPA）
+    例：饿了么，微信网页版
+ 3.为什么使用 
+   1.采用了当前比较先进的语言 typescript，是一种强类型语言，微软开发
+   2.采用了当前比较先进的技术，极大地提高了网页的执行速度和性能
+ 4.如何使用
+   1.使用组件进行管理
+   2.使用服务对功能进行封装
+   3.使用模块进行组件的管理
+ 5.安装
+   1.angular-cli 命令行安装 上官网查询
+   2.通过quickstart安装
+ 6.启动流程
+   npm start-> npm build-> src/index.html-> src/main.ts-> ./src/app/app.module.ts-> ./src/app/app.component.ts
+   目录结构
+     src 工程目录
+       main.ts 入口文件
+       app     模块（组件）目录
+          app.module.ts 根模块（可以管理多个组件）
+	  app.component.ts 根组件
+ 7.组件
+   1、组件的创建
+     import { Component } from '@angular/core'
+     @Component({
+      selector: 'demo01',
+      template: `<h2>你好，疯子！</h2>`,
+     })
+     export class Demo01Component  {  }
+   2.组件的使用
+     1.到模块中声明组件类
+	找到app.module.ts
+	import {Demo01Component} from './demo01/demo01.component'
+
+	@NgModule({
+	 declarations:[Demo01Component]
+	})
+     2.在app.component调用
+       <demo01></demo01>
+   补充：
+   ①装饰器
+    decorator 是用来接收一个配置对象（元数据）来表述对应的类，比如组件类、模块类、指令类。。
+   ②元数据
+    metaData 告诉Angular如何来处理当前这个类
+ 8.指令
+   1.ngFor循环
+     *ngFor="let tmp of list;let myindex=index"
+   2.ngIf选择
+     注意：一个标签中只能放置一个指令，如果需要放置多个指令，把多余的放入到ng-container中
+   3.属性绑定指令
+     <img [src]="fileName">
+     [] 属性绑定
+   4.事件绑定
+     <button (click)="handleClick()"></button>
+     () 事件绑定
+     注意：在事件绑定中事件处理程序，需要添加括号
+   5.指令中三种括号的作用
+     ()    用于事件绑定
+     []    用于属性绑定
+     {{}}  用于插值表达式
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+4.25
+1.属性绑定
+ 1.样式属性绑定
+  [ngStyle]="{color:mycolor...}"
+  [ngClass]="{box:true}"
+ 2.双向数据绑定
+  [(ngModel)]="city"
+  前提：需要在根模块中引入表单类
+   import {FormsModule} from '@angular/forms';
+   @NgModule({
+       imports:  [FormsModule],
+   })
+  监控表单数据变化(结合双向数据绑定)
+   (ngModelChange)="handleChange()"
+   需要写在双向数据绑定的后边
+2.自定义指令
+  1.创建指令类
+    import { Directive } from '@angular/core';
+    @Directive({ selector: '[test]' })
+    export class TestDirective {
+      constructor() {}
+    }
+  2.在app.module.ts声明
+    import { TestDirective } from './demo04/test.directive';
+    @NgModule({
+       declarations: [ TestDirective],
+    })
+  3.调用<ANY test></ANY>
+3.管道(过滤器)
+  内置：
+    uppercase lowercase date slice
+  自定义
+   1.创建
+    import { Pipe, PipeTransform } from '@angular/core';
+    @Pipe({
+      name: 'myuppercase'
+    })
+    export class MyuppercasePipe implements PipeTransform {
+      transform(value: any, ...args: any[]): any {
+         //value 就是传过来的值 args 是过滤器传过来的值
+	 return 结果
+      }
+    }
+   2.在app.module.ts声明
+    import { MyuppercasePipe }  from './demo07/myuppercase.pipe';
+    @NgModule({
+	 declarations:[MyuppercasePipe]
+    })
+   3.在组件中的模板调用
+     <p>{{str | myuppercase:true}}</p> 
+     //myuppercase 用冒号传递参数
+4.服务
+  在ng中，服务就是把常用的业务逻辑封装起来
+  1 指定提供商
+    app.module.ts
+
+    import {LogService} from '...'
+
+    @NgModule({
+      providers:[LogService]
+    })
+  2 到组件中调用服务
+     import {LogService} from './log.service'
+
+     constructor(private myService:LogService){}
+
+     //this.myService.**
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+4.26
+1.创建http请求服务
+ 1.a-service-http
+  send(url:string){
+   //a-http-get
+   return this.http.get(url)
+	.map((response: Response) => response.json());
+  }
+ 2.在根模块 app.module.ts
+  指定服务提供商
+  引入HttpModule
+  import {HttpModule} from '@angular/http';
+ 3.发送请求
+  this.mysend.send('url地址')
+        .subscribe((result:any)=>{
+	   //result就是请求的结果
+	});
+ 注意：
+  如果请求的url是带有session的数据
+   1.添加证书
+    this.http.get(url,{withCredentials:true})
+   2.在PhP等其他后台
+    设置跨域（不能是*）以及证书
+    header('Access-Control-Allow-Origin:http://localhost:3000');
+    header('Access-Control-Allow-Credentials:true');
+2.组件间通信
+  1.父组件传递子组件
+    1.在父组件
+     <demo04-son msg="你是儿子"></demo04-son>
+    2.在子组件
+     import {Input} from '@angular/core';
+     export class Demo04SonComponent implements OnInit {
+       @Input() msg:string='';
+     }
+  2.子组件传递父组件
+    1.在父组件创建自定义事件
+     <demo05-son (customEvent)="rcvMsg($event)"></demo05-son>
+    2.子组件
+     import {Output,EventEmitter} from '@angular/core';
+     export class Demo05SonComponent implements OnInit {
+       @Output() customEvent:any=new EventEmitter();
+       //绑定点击事件
+       tzClick(){
+        this.customEvent.emit('老爸，我是儿子');
+       }
+     }

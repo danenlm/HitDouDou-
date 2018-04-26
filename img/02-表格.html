@@ -1,0 +1,113 @@
+<!doctype html>
+<html>
+  <head>
+    <title>第一个HTML作业</title>
+    <meta charset="utf-8">
+  </head>
+  <body>
+    <h1 align="center">
+      HTML5 &lt;Day01&gt;
+    </h1>
+    
+    <!-- 有序列表 -->
+    <ol>
+      <li>
+        HTML文档片段
+        <ul>
+          <li>
+            <a href="#question">问题</a>
+          </li>
+          <li>
+            <a href="#solution">方案</a>
+          </li>
+          <li>
+            <a href="#shixian">实现</a>
+          </li>
+          <li>
+            <a href="#extend">扩展</a>
+          </li>
+        </ul>
+      </li>
+      <li>
+        我的第一个HTML文档
+        <ul>
+          <li>问题</li>
+          <li>方案</li>
+          <li>实现</li>
+        </ul>
+      </li>
+    </ol>
+
+    <!-- 水平线 -->
+    <hr>
+    <!-- 二级标题 -->
+    <h2>1 HTML 文档片段</h2>
+    <!-- 通过 id 属性 定义锚点 -->
+    <h3 id="question">1.1 问题</h3>
+    <p>创建如图-1所示的 HTML 页面</p>
+    <!-- 添加一副图 -->
+    <div align="center">
+      <img src="page.JPG">
+      <h3>图-1</h3>
+    </div>
+
+    <h3 id="solution">1.2 方案</h3>
+    <p>使用 HTML 标记来完成该页面效果</p>
+    <h3 id="shixian">1.3 实现</h3>
+    <p>建立一个文本文件，并修改文件名称为 first.html ，然后使用文本编辑器打开该文件，并为该文件添加代码，以创建标准格式的 HTML 文档。</p>
+    <!-- 允许被点击的图像 -->
+    <div align="center">
+      <a target="_blank" href="http://www.tmooc.cn">
+        <img src="page_struct.JPG">
+      </a>
+      <h3>图-2</h3>
+    </div>
+    <p>然后，在 body 元素中添加代码，以创建居中显示的段落文本。代码如下所示：</p>
+    <pre>
+      &lt;p align="center" title="段落"&gt;
+        居中显示的段落
+      &lt;/p&gt;
+    </pre>
+    <!-- 1.4扩展 -->
+    <h3 id="extend">1.4 扩展</h3>
+    <p>创建如下所示的表格：</p>
+    <!-- 创建一个 5行3列的表格：
+      1、表格 居中对齐
+      2、表格 有边框
+      3、表格 有标题：表-1
+      4、最后两行，每行都要合并3列
+      5、表格 设置宽度
+      6、表格 有内边距
+    -->
+    <table align="center" border="1px" width="500px" cellpadding="5px">
+      <!-- 标题 -->
+      <caption>表-1</caption>
+      <tr>
+        <td>全月应纳税所得额</td>
+        <td>税率</td>
+        <td>速算扣除数</td>
+      </tr>
+      <tr>
+        <td>全月应纳税所得额&lt;1500</td>
+        <td>3%</td>
+        <td>0</td>
+      </tr>
+      <tr>
+        <td>1500=&lt;全月应纳税所得额&lt;450</td>
+        <td>10%</td>
+        <td>105</td>
+      </tr>
+      <!-- 第四行：第一列 要合并3列 -->
+      <tr>
+        <td colspan="3">...</td>
+      </tr>
+      <!-- 第五航：第一列 要合并3列 -->
+      <tr>
+        <td colspan="3">
+          计算公式：... ...
+        </td>
+      </tr>
+    </table>
+    <a href="#">To Top</a>
+  </body>
+</html>
